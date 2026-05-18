@@ -6,7 +6,7 @@
     <title>解锁你的桌游隐藏人格 - 酸黄瓜桌游俱乐部</title>
     <!-- Open Graph / 分享卡片 -->
     <meta property="og:title" content="解锁你的桌游隐藏人格">
-    <meta property="og:description" content="你是欧皇交际花，还是冷血计分器？10道题，找到你的桌游隐藏人格。">
+    <meta property="og:description" content="你是欧皇交际花，还是冷血计分器？12道题，找到你的桌游隐藏人格。">
     <meta property="og:image" content="https://sunxhg.github.io/shgzyjlb/logo.jpg">
     <meta property="og:image:width" content="1138">
     <meta property="og:image:height" content="1138">
@@ -15,7 +15,7 @@
     <meta property="og:site_name" content="酸黄瓜桌游俱乐部">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="解锁你的桌游隐藏人格">
-    <meta name="twitter:description" content="你是欧皇交际花，还是冷血计分器？10道题，找到你的桌游隐藏人格。">
+    <meta name="twitter:description" content="你是欧皇交际花，还是冷血计分器？12道题，找到你的桌游隐藏人格。">
     <meta name="twitter:image" content="https://sunxhg.github.io/shgzyjlb/logo.jpg">
     <meta name="description" content="解锁你的桌游隐藏人格，找到最适合你的那款桌游。杭州酸黄瓜桌游俱乐部出品。">
     <link rel="icon" href="logo.jpg" type="image/jpeg">
@@ -1020,7 +1020,7 @@
                 <div class="mode-card" onclick="startMBTI()">
                     <span class="mode-icon">🎭</span>
                     <div class="mode-title">解锁你的桌游隐藏人格</div>
-                    <div class="mode-desc">10道题，找到你的桌游隐藏人格，发现最适合你的那款桌游</div>
+                    <div class="mode-desc">12道题，找到你的桌游隐藏人格，发现最适合你的那款桌游</div>
                     <span class="mode-tag">人格分析</span>
                 </div>
                 <div class="mode-card" onclick="startProTest()">
@@ -1046,7 +1046,7 @@
                 <div class="progress-fill" id="progressFill"></div>
             </div>
             <div class="question-card" id="questionCard">
-                <div class="question-num" id="questionNum">第 1/10 题</div>
+                <div class="question-num" id="questionNum">第 1/12 题</div>
                 <div class="question-text" id="questionText">题目内容</div>
                 <div class="options">
                     <button class="option-btn" id="optionA" onclick="selectOption('A')"></button>
@@ -1290,62 +1290,30 @@
             }
         });
 
-        // 题库：4个维度各12道题，共48道
+        // 题库：从JSON文件加载
         // 维度：风格（宽容/卡人）、目标（计分/故事）、社交（嘴炮/自闭）、能力（好运/运营）
-        const allQuestions = [
-            // === 维度1：风格（宽容 / 卡人）===
-            { text: "朋友下错一步牌导致崩盘，你？", A: { text: "算了，游戏而已", scores: { 宽容: 1 } }, B: { text: "记仇，下局必须卡回来", scores: { 卡人: 1 } } },
-            { text: "有人违反规则但没被发现，你？", A: { text: "装没看见，开心就好", scores: { 宽容: 1 } }, B: { text: "必须指出来，规则就是规则", scores: { 卡人: 1 } } },
-            { text: "新人一直输，你会？", A: { text: "暗中放水帮他", scores: { 宽容: 1 } }, B: { text: "该输就输，竞技精神", scores: { 卡人: 1 } } },
-            { text: "队友坑了你导致输掉比赛，你？", A: { text: "没事，下次再来", scores: { 宽容: 1 } }, B: { text: "当场分析他哪里下错了", scores: { 卡人: 1 } } },
-            { text: "有人为了让你赢故意让你，你？", A: { text: "感谢，心里暖暖的", scores: { 宽容: 1 } }, B: { text: "不需要，认真打", scores: { 卡人: 1 } } },
-            { text: "你更受不了哪种情况？", A: { text: "为了赢而伤害感情", scores: { 宽容: 1 } }, B: { text: "因为人情世故而输", scores: { 卡人: 1 } } },
-            { text: "面对争议规则，你？", A: { text: "大家都行就行", scores: { 宽容: 1 } }, B: { text: "查清楚按规则来", scores: { 卡人: 1 } } },
-            { text: "有人破坏你精心布局，你？", A: { text: "算了，游戏而已", scores: { 宽容: 1 } }, B: { text: "记仇，这局必须赢回来", scores: { 卡人: 1 } } },
-            { text: "你更喜欢哪种评价？", A: { text: "跟你玩真开心", scores: { 宽容: 1 } }, B: { text: "这步棋下得妙啊", scores: { 卡人: 1 } } },
-            { text: "输了比赛，你更想听到？", A: { text: "没关系，你已经很棒了", scores: { 宽容: 1 } }, B: { text: "下次哪里可以改进", scores: { 卡人: 1 } } },
-            { text: "你更在意？", A: { text: "大家的情绪和体验", scores: { 宽容: 1 } }, B: { text: "自己的得分和排名", scores: { 卡人: 1 } } },
-            { text: "游戏中你更喜欢？", A: { text: "照顾大家体验，氛围第一", scores: { 宽容: 1 } }, B: { text: "理性计算最优解，输赢第一", scores: { 卡人: 1 } } },
-            // === 维度2：目标（计分 / 故事）===
-            { text: "玩桌游时你更关注？", A: { text: "算清楚每个得分点", scores: { 计分: 1 } }, B: { text: "沉浸在游戏的故事里", scores: { 故事: 1 } } },
-            { text: "评价一局游戏好不好玩，你更在意？", A: { text: "过程是否流畅、有没有卡手", scores: { 计分: 1 } }, B: { text: "有没有打出神来之笔", scores: { 故事: 1 } } },
-            { text: "桌游对你来说更像？", A: { text: "一场精确的数学竞赛", scores: { 计分: 1 } }, B: { text: "一段沉浸式的冒险", scores: { 故事: 1 } } },
-            { text: "玩游戏时，你更爱？", A: { text: "看着眼前的资源和行动", scores: { 计分: 1 } }, B: { text: "想下一步、下下步的可能性", scores: { 故事: 1 } } },
-            { text: "选游戏时，你更在意？", A: { text: "配件手感、规则具体能干什么", scores: { 计分: 1 } }, B: { text: "世界观、故事感、想象力", scores: { 故事: 1 } } },
-            { text: "遇到复杂的规则书，你会？", A: { text: "一步步跟着示例过一遍", scores: { 计分: 1 } }, B: { text: "先看懂核心机制，细节再说", scores: { 故事: 1 } } },
-            { text: "一款游戏的画风，你更看重？", A: { text: "清晰直观，一眼看懂", scores: { 计分: 1 } }, B: { text: "精美独特，有艺术感", scores: { 故事: 1 } } },
-            { text: "你更喜欢？", A: { text: "经典的、经过时间考验的", scores: { 计分: 1 } }, B: { text: "新潮的、不断推陈出新的", scores: { 故事: 1 } } },
-            { text: "游戏过程中，你更在意？", A: { text: "当下的最优操作", scores: { 计分: 1 } }, B: { text: "未来的潜在机会", scores: { 故事: 1 } } },
-            { text: "你更享受？", A: { text: "执行既定计划的成就感", scores: { 计分: 1 } }, B: { text: "发现隐藏套路的惊喜感", scores: { 故事: 1 } } },
-            { text: "你更欣赏哪种玩家？", A: { text: "稳扎稳打，从不犯错的", scores: { 计分: 1 } }, B: { text: "神之一手，逆天改命的", scores: { 故事: 1 } } },
-            { text: "你更喜欢的游戏类型是？", A: { text: "规则明确、算分清晰", scores: { 计分: 1 } }, B: { text: "开放度高、有多种可能性", scores: { 故事: 1 } } },
-            // === 维度3：社交（嘴炮 / 自闭）===
-            { text: "周末组局，你更想？", A: { text: "拉满人，越热闹越好", scores: { 嘴炮: 1 } }, B: { text: "叫一两个最熟的，安静玩", scores: { 自闭: 1 } } },
-            { text: "桌游局上，你通常？", A: { text: "主动带节奏，话最多", scores: { 嘴炮: 1 } }, B: { text: "默默算牌，偶尔补刀", scores: { 自闭: 1 } } },
-            { text: "组不到人时，你会？", A: { text: "去店里认识新朋友", scores: { 嘴炮: 1 } }, B: { text: "自己 solo 一局也挺好", scores: { 自闭: 1 } } },
-            { text: "新游戏上手，你更喜欢？", A: { text: "先听别人讲一遍规则", scores: { 嘴炮: 1 } }, B: { text: "自己默默看说明书", scores: { 自闭: 1 } } },
-            { text: "一场3小时的桌游，中场休息时你？", A: { text: "拉着大家聊天八卦", scores: { 嘴炮: 1 } }, B: { text: "找个角落刷手机", scores: { 自闭: 1 } } },
-            { text: "聚会结束，你更倾向于？", A: { text: "再约个夜宵继续聊", scores: { 嘴炮: 1 } }, B: { text: "赶紧回家充电", scores: { 自闭: 1 } } },
-            { text: "在陌生局上，你通常？", A: { text: "主动自我介绍，迅速熟络", scores: { 嘴炮: 1 } }, B: { text: "等别人cue我再说", scores: { 自闭: 1 } } },
-            { text: "你更享受哪种胜利？", A: { text: "在众人欢呼中拿下", scores: { 嘴炮: 1 } }, B: { text: "在无人注意时默默赢", scores: { 自闭: 1 } } },
-            { text: "一桌游戏，你更愿意当？", A: { text: "主持人，掌控全场", scores: { 嘴炮: 1 } }, B: { text: "参与者，专心玩牌", scores: { 自闭: 1 } } },
-            { text: "你更喜欢哪种玩家？", A: { text: "话多有趣，活跃气氛的", scores: { 嘴炮: 1 } }, B: { text: "安静靠谱，专注游戏的", scores: { 自闭: 1 } } },
-            { text: "如果明天是桌游日，你今晚？", A: { text: "兴奋得睡不着，疯狂组局", scores: { 嘴炮: 1 } }, B: { text: "早早休息，养精蓄锐", scores: { 自闭: 1 } } },
-            { text: "输了一局后，你更想？", A: { text: "立刻开下一局，越战越勇", scores: { 嘴炮: 1 } }, B: { text: "先缓缓，复盘一下再玩", scores: { 自闭: 1 } } },
-            // === 维度4：能力（好运 / 运营）===
-            { text: "你更希望游戏？", A: { text: "变数多，每局都不一样", scores: { 好运: 1 } }, B: { text: "规则确定，按规矩来", scores: { 运营: 1 } } },
-            { text: "开局前，你？", A: { text: "边玩边想，随机应变", scores: { 好运: 1 } }, B: { text: "先想清楚策略，按计划走", scores: { 运营: 1 } } },
-            { text: "你更享受？", A: { text: "最后关头逆袭翻盘", scores: { 好运: 1 } }, B: { text: "按照计划一步步赢下来", scores: { 运营: 1 } } },
-            { text: "一局游戏结束后，你会？", A: { text: "一把扫进盒子完事", scores: { 好运: 1 } }, B: { text: "把token一个个放回盒里", scores: { 运营: 1 } } },
-            { text: "去桌游店前，你通常？", A: { text: "到了再说，看心情", scores: { 好运: 1 } }, B: { text: "提前想好要玩什么", scores: { 运营: 1 } } },
-            { text: "游戏进行到一半，有人提议换规则？", A: { text: "可以啊，试试新的", scores: { 好运: 1 } }, B: { text: "不行，按原规则来", scores: { 运营: 1 } } },
-            { text: "你的桌游收藏？", A: { text: "堆在一起，能找到就行", scores: { 好运: 1 } }, B: { text: "分类整齐，标签明确", scores: { 运营: 1 } } },
-            { text: "你更喜欢哪种游戏？", A: { text: "自由探索，没有边界的", scores: { 好运: 1 } }, B: { text: "目标明确，有终点线的", scores: { 运营: 1 } } },
-            { text: "面对突发状况，你？", A: { text: "兴奋了，机会来了", scores: { 好运: 1 } }, B: { text: "有点慌，想回到正轨", scores: { 运营: 1 } } },
-            { text: "你更喜欢？", A: { text: "说走就走，随时组局", scores: { 好运: 1 } }, B: { text: "提前订好时间地点", scores: { 运营: 1 } } },
-            { text: "游戏过程中，你更喜欢？", A: { text: "随时调整，拥抱意外", scores: { 好运: 1 } }, B: { text: "按计划执行，讨厌被打断", scores: { 运营: 1 } } },
-            { text: "你更受不了？", A: { text: "一成不变的套路", scores: { 好运: 1 } }, B: { text: "计划被打乱", scores: { 运营: 1 } } },
-        ];
+        // 维度1: 25题 (0-24), 维度2: 20题 (25-44), 维度3: 20题 (45-64), 维度4: 20题 (65-84)
+        let allQuestions = [];
+        let dataLoaded = false;
+        let loadError = false;
+
+        // 加载题库JSON
+        async function loadQuestions() {
+            try {
+                const response = await fetch('questions.json');
+                if (!response.ok) throw new Error('Failed to load');
+                allQuestions = await response.json();
+                dataLoaded = true;
+                console.log(`Loaded ${allQuestions.length} questions`);
+            } catch (e) {
+                loadError = true;
+                console.error('Failed to load questions.json:', e);
+                // 降级：显示错误提示
+                document.querySelector('.subtitle').innerHTML =
+                    '题库加载失败，请刷新页面重试<br><small>如果问题持续，请联系管理员</small>';
+            }
+        }
+        loadQuestions();
 
         // 16种桌游隐藏人格
         const personalityData = {
@@ -1770,8 +1738,18 @@
         }
 
         function startMBTI() {
+            if (!dataLoaded) {
+                showToast('题库加载中，请稍后再试');
+                return;
+            }
             quizMode = 'mbti';
-            questions = shuffle(allQuestions).slice(0, 10);
+            // 从4个维度各抽3道 = 共12道
+            // 维度1: 25题(0-24), 维度2: 20题(25-44), 维度3: 20题(45-64), 维度4: 20题(65-84)
+            const dim1 = shuffle(allQuestions.slice(0, 25)).slice(0, 3);
+            const dim2 = shuffle(allQuestions.slice(25, 45)).slice(0, 3);
+            const dim3 = shuffle(allQuestions.slice(45, 65)).slice(0, 3);
+            const dim4 = shuffle(allQuestions.slice(65, 85)).slice(0, 3);
+            questions = shuffle([...dim1, ...dim2, ...dim3, ...dim4]);
             currentQuestion = 0;
             scores = { 宽容:0, 卡人:0, 计分:0, 故事:0, 嘴炮:0, 自闭:0, 好运:0, 运营:0 };
 
@@ -1828,7 +1806,7 @@
         // 显示题目
         function showQuestion() {
             const q = questions[currentQuestion];
-            document.getElementById('questionNum').textContent = `第 ${currentQuestion + 1}/10 题`;
+            document.getElementById('questionNum').textContent = `第 ${currentQuestion + 1}/12 题`;
 
             const optionsContainer = document.querySelector('.options');
             optionsContainer.innerHTML = '';
