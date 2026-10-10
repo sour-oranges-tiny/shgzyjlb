@@ -1,0 +1,2426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>解锁你的桌游隐藏人格 - 酸黄瓜桌游俱乐部</title>
+    <!-- Open Graph / 分享卡片 -->
+    <meta property="og:title" content="解锁你的桌游隐藏人格">
+    <meta property="og:description" content="你是欧皇交际花，还是冷血计分器？12道题，找到你的桌游隐藏人格。">
+    <meta property="og:image" content="https://sunxhg.github.io/shgzyjlb/logo.jpg">
+    <meta property="og:image:width" content="1138">
+    <meta property="og:image:height" content="1138">
+    <meta property="og:url" content="https://sunxhg.github.io/shgzyjlb/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="酸黄瓜桌游俱乐部">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="解锁你的桌游隐藏人格">
+    <meta name="twitter:description" content="你是欧皇交际花，还是冷血计分器？12道题，找到你的桌游隐藏人格。">
+    <meta name="twitter:image" content="https://sunxhg.github.io/shgzyjlb/logo.jpg">
+    <meta name="description" content="解锁你的桌游隐藏人格，找到最适合你的那款桌游。杭州酸黄瓜桌游俱乐部出品。">
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="logo.jpg">
+    <style>
+        /* 飘动粒子背景 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.15;
+            animation: float linear infinite;
+            user-select: none;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 欢迎页 */
+        .welcome-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* 首页右上角logo */
+        .home-logo {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: bounceIn 1s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
+        }
+        .home-logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .home-logo-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            transform: scale(1.8) translateY(12%);
+        }
+        .home-logo-text {
+            font-size: 12px;
+            color: #558b2f;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .welcome-page h1 {
+            color: #2e7d32;
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.3s forwards;
+        }
+
+        .welcome-page .subtitle {
+            color: #558b2f;
+            font-size: 16px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.5s forwards;
+        }
+
+        .btn-start {
+            background: #66bb6a;
+            color: #fff;
+            border: none;
+            padding: 16px 60px;
+            font-size: 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 187, 106, 0.4);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.7s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-start::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-start:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-start:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(102, 187, 106, 0.3);
+        }
+
+        /* 测试页 */
+        .quiz-page {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(46, 125, 50, 0.15);
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #81c784, #66bb6a);
+            border-radius: 3px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+            box-shadow: 0 0 8px rgba(102, 187, 106, 0.5);
+        }
+
+        .question-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            animation: slideUp 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #81c784, transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .question-num {
+            color: #66bb6a;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .question-num::before {
+            content: '🎲';
+            font-size: 16px;
+            animation: shake 2s infinite;
+        }
+
+        .question-text {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: #f1f8e9;
+            border: 2px solid transparent;
+            padding: 18px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 16px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.5;
+            position: relative;
+            overflow: hidden;
+            color: #33691e;
+        }
+
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(129, 199, 132, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .option-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .option-btn:hover {
+            background: #dcedc8;
+            border-color: #81c784;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(129, 199, 132, 0.3);
+        }
+
+        .option-btn:active {
+            transform: scale(0.97);
+            background: #c5e1a5;
+            border-color: #66bb6a;
+        }
+
+        /* 结果页 */
+        .result-page {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .result-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 35px 25px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* 米宝形象 */
+        .meeple-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            animation: bounceIn 1s ease 0.1s both;
+        }
+
+        .meeple-svg {
+            width: 140px;
+            height: 190px;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));
+        }
+
+        .meeple-body {
+            transition: fill 0.5s ease;
+        }
+
+        .meeple-head {
+            transition: fill 0.5s ease;
+        }
+
+        .mbti-type {
+            font-size: 52px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #66bb6a 0%, #2e7d32 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            animation: popIn 0.5s ease 0.2s both;
+        }
+
+        .personality-title {
+            font-size: 22px;
+            color: #388e3c;
+            font-weight: bold;
+            margin-bottom: 15px;
+            animation: fadeInUp 0.5s ease 0.4s both;
+        }
+
+        .catchphrase {
+            font-size: 16px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 25px;
+            padding: 0 10px;
+            line-height: 1.6;
+            animation: fadeInUp 0.5s ease 0.6s both;
+        }
+
+        .personality-desc {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+            text-align: left;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.5s ease 0.7s both;
+        }
+
+        .best-partner {
+            font-size: 14px;
+            color: #2e7d32;
+            font-weight: bold;
+            padding: 12px 16px;
+            background: #e8f5e9;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: left;
+            animation: fadeInUp 0.5s ease 0.9s both;
+            border-left: 3px solid #66bb6a;
+        }
+
+        .mode-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        .mode-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #66bb6a, #2e7d32);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            border-color: #81c784;
+        }
+
+        .mode-card:hover::before {
+            opacity: 1;
+        }
+
+        .mode-card:active {
+            transform: scale(0.98);
+        }
+
+        .mode-card .mode-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .mode-card .mode-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 8px;
+        }
+
+        .mode-card .mode-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .mode-card .mode-tag {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        /* 段位徽章 */
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            animation: fadeInUp 0.5s ease 0.35s both;
+        }
+        .rank-badge.bronze { background: linear-gradient(135deg, #cd7f32, #e8a87c); color: #fff; }
+        .rank-badge.silver { background: linear-gradient(135deg, #9e9e9e, #bdbdbd); color: #fff; }
+        .rank-badge.gold { background: linear-gradient(135deg, #ffd700, #ffecb3); color: #8b6914; }
+        .rank-badge.platinum { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); color: #00695c; }
+        .rank-badge.diamond { background: linear-gradient(135deg, #e3f2fd, #bbdefb); color: #1565c0; }
+        .rank-badge.master { background: linear-gradient(135deg, #f3e5f5, #e1bee7); color: #7b1fa2; }
+        .rank-icon { font-size: 20px; }
+
+        /* 段位专属展示区域 */
+        .pro-section {
+            margin-top: 25px;
+            text-align: left;
+            animation: fadeInUp 0.5s ease 0.3s both;
+        }
+
+        .pro-badge {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .pro-emoji {
+            font-size: 60px;
+            margin-bottom: 10px;
+            animation: popIn 0.6s ease 0.2s both;
+        }
+
+        .pro-power {
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* 得分进度条 */
+        .pro-progress-container {
+            margin-bottom: 20px;
+        }
+
+        .pro-progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .pro-progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e8e8e8;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .pro-progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+
+        /* 段位故事 */
+        .pro-story {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 3px solid #ddd;
+        }
+
+        /* 段位特权 */
+        .pro-privilege {
+            font-size: 14px;
+            color: #2e7d32;
+            font-weight: bold;
+            padding: 12px 15px;
+            background: #e8f5e9;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 3px solid #66bb6a;
+        }
+
+        .pro-privilege::before {
+            content: '🎁 ';
+        }
+
+        /* 进阶提示 */
+        .pro-next {
+            font-size: 13px;
+            color: #666;
+            padding: 12px 15px;
+            background: #fff3e0;
+            border-radius: 12px;
+            border-left: 3px solid #ff9800;
+        }
+
+        .pro-next::before {
+            content: '💡 ';
+        }
+
+        /* 庆祝彩带 */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 200;
+            overflow: hidden;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confetti-fall linear forwards;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* 表情包猜桌游卡片 */
+        .guess-meme-card {
+            background: #fff;
+            border: 3px solid #333;
+            border-radius: 16px;
+            padding: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: popIn 0.5s ease;
+            overflow: hidden;
+        }
+        .meme-top {
+            background: #333;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            letter-spacing: 1px;
+        }
+        .meme-emoji {
+            font-size: 64px;
+            padding: 15px 0 10px;
+            background: #fafafa;
+        }
+        .meme-divider {
+            height: 2px;
+            background: #333;
+            margin: 0 30px;
+        }
+        .meme-bottom {
+            background: #fff3e0;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            letter-spacing: 1px;
+        }
+        .meme-bottom-emoji {
+            font-size: 48px;
+            padding: 10px 0 5px;
+            background: #fff3e0;
+        }
+        .guess-meme-label {
+            font-size: 14px;
+            color: #666;
+            padding: 8px;
+            background: #f5f5f5;
+            border-top: 2px solid #333;
+        }
+
+        /* 答题详情 */
+        .guess-answers {
+            text-align: left;
+        }
+        .guess-answer-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            gap: 8px;
+        }
+        .guess-answer-item.correct {
+            background: #e8f5e9;
+            border-left: 3px solid #66bb6a;
+        }
+        .guess-answer-item.wrong {
+            background: #ffebee;
+            border-left: 3px solid #ef5350;
+        }
+        .answer-q {
+            font-weight: bold;
+            min-width: 80px;
+        }
+        .answer-a {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        .answer-yours {
+            color: #ef5350;
+            font-style: italic;
+        }
+
+        /* 段位特效加强 */
+        .rank-bronze { color: #cd7f32; text-shadow: 0 1px 3px rgba(205,127,50,0.4); }
+        .rank-silver { color: #9e9e9e; text-shadow: 0 0 8px rgba(200,200,200,0.6); animation: silver-shine 2.5s infinite; }
+        .rank-gold { color: #d4a017; text-shadow: 0 0 12px rgba(255,200,0,0.7), 0 0 24px rgba(255,200,0,0.4); animation: gold-pulse 1.5s infinite; }
+        .rank-platinum { color: #00e5ff; text-shadow: 0 0 16px rgba(0,229,255,0.8), 0 0 32px rgba(0,229,255,0.5), 0 0 48px rgba(0,229,255,0.3); animation: platinum-glow 0.8s infinite alternate; }
+        .rank-diamond { color: #b388ff; text-shadow: 0 0 20px rgba(179,136,255,0.9), 0 0 40px rgba(179,136,255,0.6), 0 0 60px rgba(179,136,255,0.3); animation: diamond-sparkle 0.5s infinite; }
+        .rank-master { color: #ffd700; text-shadow: 0 0 25px rgba(255,215,0,1), 0 0 50px rgba(255,215,0,0.7), 0 0 80px rgba(255,215,0,0.4); animation: master-rainbow 0.3s infinite; }
+
+        @keyframes silver-shine {
+            0%, 100% { filter: brightness(1); text-shadow: 0 0 8px rgba(200,200,200,0.6); }
+            50% { filter: brightness(1.4); text-shadow: 0 0 16px rgba(255,255,255,0.8); }
+        }
+        @keyframes gold-pulse {
+            0%, 100% { transform: scale(1); text-shadow: 0 0 12px rgba(255,200,0,0.7), 0 0 24px rgba(255,200,0,0.4); }
+            50% { transform: scale(1.02); text-shadow: 0 0 20px rgba(255,220,0,0.9), 0 0 40px rgba(255,200,0,0.6); }
+        }
+        @keyframes platinum-glow {
+            0% { text-shadow: 0 0 16px rgba(0,229,255,0.8), 0 0 32px rgba(0,229,255,0.5); }
+            100% { text-shadow: 0 0 24px rgba(0,229,255,1), 0 0 48px rgba(0,229,255,0.7), 0 0 72px rgba(0,229,255,0.4); }
+        }
+        @keyframes diamond-sparkle {
+            0%, 100% { opacity: 1; filter: brightness(1); }
+            50% { opacity: 0.85; filter: brightness(1.3); }
+        }
+        @keyframes master-rainbow {
+            0% { filter: hue-rotate(0deg) brightness(1); text-shadow: 0 0 25px rgba(255,215,0,1), 0 0 50px rgba(255,215,0,0.7); }
+            50% { filter: hue-rotate(180deg) brightness(1.2); text-shadow: 0 0 35px rgba(255,215,0,1), 0 0 70px rgba(255,215,0,0.9); }
+            100% { filter: hue-rotate(360deg) brightness(1); text-shadow: 0 0 25px rgba(255,215,0,1), 0 0 50px rgba(255,215,0,0.7); }
+        }
+
+        /* 经典语录 */
+        .classic-quote {
+            font-size: 18px;
+            color: #2e7d32;
+            font-weight: bold;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            position: relative;
+            animation: fadeInUp 0.5s ease 0.5s both;
+            border-left: 4px solid #66bb6a;
+        }
+        .classic-quote::before {
+            content: '"';
+            font-size: 32px;
+            color: #81c784;
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            line-height: 1;
+        }
+
+        /* 雷达图 */
+        .radar-section {
+            margin: 25px 0;
+            animation: fadeInUp 0.5s ease 0.75s both;
+        }
+        .radar-section h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .radar-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+        .radar-container canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .recommend-section {
+            text-align: left;
+            margin-top: 20px;
+            animation: fadeInUp 0.5s ease 0.8s both;
+        }
+
+        .recommend-section h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .game-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%);
+            color: #1b5e20;
+            padding: 10px 16px;
+            border-radius: 25px;
+            margin: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            animation: popIn 0.4s ease both;
+        }
+
+        .share-section {
+            width: 100%;
+            margin-top: 10px;
+            animation: fadeInUp 0.5s ease 1s both;
+        }
+
+        .btn-share {
+            width: 100%;
+            background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+            box-shadow: 0 5px 20px rgba(129, 199, 132, 0.4);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-share::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-share:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-share:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 10px rgba(129, 199, 132, 0.3);
+        }
+
+        .btn-copy {
+            width: 100%;
+            background: #fff;
+            color: #388e3c;
+            border: 2px solid #81c784;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-copy::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(129, 199, 132, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-copy:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-copy:active {
+            transform: scale(0.97);
+            background: #f1f8e9;
+        }
+
+        /* 返回首页按钮 */
+        .btn-back {
+            width: 100%;
+            background: #fff;
+            color: #666;
+            border: 2px solid #ddd;
+            padding: 12px;
+            font-size: 14px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-back:active {
+            transform: scale(0.97);
+            background: #f5f5f5;
+        }
+
+        /* 测试页顶部的返回首页按钮 */
+        .back-home-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 50;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            transition: all 0.2s;
+        }
+        .back-home-btn:active {
+            transform: scale(0.95);
+            background: #fff;
+        }
+
+        .shop-info {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(46, 125, 50, 0.08);
+            border-radius: 16px;
+            color: #2e7d32;
+            text-align: center;
+            width: 100%;
+            animation: fadeInUp 0.5s ease 1.2s both;
+        }
+
+        .shop-info h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .shop-info p {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            70% { transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            z-index: 100;
+            animation: fadeIn 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 首页 -->
+        <div class="welcome-page" id="welcomePage">
+            <!-- 右上角logo -->
+            <div class="home-logo">
+                <div class="home-logo-img">
+                    <img src="logo.jpg" alt="酸黄瓜桌游">
+                </div>
+<!--                <span class="home-logo-text">酸黄瓜桌游俱乐部</span>-->
+            </div>
+            <h1>酸黄瓜妙妙屋</h1>
+            <p class="subtitle">
+                happy happpy happy<br>
+            </p>
+            <div class="mode-selector">
+                <div class="mode-card" onclick="startMBTI()">
+                    <span class="mode-icon">🎭</span>
+                    <div class="mode-title">解锁你的桌游隐藏人格</div>
+                    <div class="mode-desc">12道题，找到你的桌游隐藏人格，发现最适合你的那款桌游</div>
+                    <span class="mode-tag">人格分析</span>
+                </div>
+                <div class="mode-card" onclick="startProTest()">
+                    <span class="mode-icon">🏆</span>
+                    <div class="mode-title">桌游段位测试</div>
+                    <div class="mode-desc">10道专业知识题，测测你的桌游段位</div>
+                    <span class="mode-tag">段位评定</span>
+                </div>
+                <div class="mode-card" onclick="startGuessGame()">
+                    <span class="mode-icon">🔍</span>
+                    <div class="mode-title">桌游猜猜乐</div>
+                    <div class="mode-desc">看封面局部线索，猜出是哪款桌游</div>
+                    <span class="mode-tag">趣味猜题</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 测试页 -->
+        <div class="quiz-page" id="quizPage">
+            <!-- 返回首页按钮 -->
+            <button class="back-home-btn" id="backHomeBtn" onclick="goHome()">← 返回首页</button>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="question-card" id="questionCard">
+                <div class="question-num" id="questionNum">第 1/12 题</div>
+                <div class="question-text" id="questionText">题目内容</div>
+                <div class="options">
+                    <button class="option-btn" id="optionA" onclick="selectOption('A')"></button>
+                    <button class="option-btn" id="optionB" onclick="selectOption('B')"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="particles" id="particles"></div>
+
+        <!-- 结果页 -->
+        <div class="result-page" id="resultPage">
+            <div class="result-card" id="resultCard">
+                <!-- 桌游小人形象 -->
+                <div class="meeple-container" id="meepleContainer">
+                    <svg class="meeple-svg" viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="gemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:rgba(255,255,255,0.4)"/>
+                                <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+                            </linearGradient>
+                        </defs>
+                        <g id="avatarGroup">
+                            <!-- 身体/衣服 -->
+                            <path id="avatarBody" d="M 50 120 Q 50 100 80 100 Q 110 100 110 120 L 115 175 Q 115 185 105 185 L 95 185 L 95 165 L 65 165 L 65 185 L 55 185 Q 45 185 45 175 Z" fill="#66bb6a"/>
+                            <!-- 领口 -->
+                            <path d="M 65 100 L 80 115 L 95 100" fill="none" stroke="#333" stroke-width="2"/>
+                            <!-- 手臂 -->
+                            <line id="armLeft" x1="50" y1="125" x2="30" y2="155" stroke="#66bb6a" stroke-width="8" stroke-linecap="round"/>
+                            <line id="armRight" x1="110" y1="125" x2="130" y2="155" stroke="#66bb6a" stroke-width="8" stroke-linecap="round"/>
+                            <!-- 手 -->
+                            <circle id="handLeft" cx="28" cy="158" r="6" fill="#ffe0cc"/>
+                            <circle id="handRight" cx="132" cy="158" r="6" fill="#ffe0cc"/>
+
+                            <!-- 头部 -->
+                            <ellipse id="avatarHead" cx="80" cy="65" rx="38" ry="42" fill="#ffe0cc"/>
+                            <!-- 头发 -->
+                            <path id="hair" d="M 42 60 Q 42 30 80 25 Q 118 30 118 60 L 118 50 Q 115 20 80 15 Q 45 20 42 50 Z" fill="#4a3728"/>
+
+                            <!-- 宽容配件: 天使翅膀 -->
+                            <g id="angelWings" style="display:none">
+                                <path d="M 35 120 Q 10 90 15 60 Q 20 45 35 55" fill="none" stroke="#fff" stroke-width="3"/>
+                                <path d="M 125 120 Q 150 90 145 60 Q 140 45 125 55" fill="none" stroke="#fff" stroke-width="3"/>
+                                <path d="M 35 115 Q 18 95 22 75 Q 25 65 38 72" fill="none" stroke="#fff" stroke-width="2" opacity="0.5"/>
+                                <path d="M 125 115 Q 142 95 138 75 Q 135 65 122 72" fill="none" stroke="#fff" stroke-width="2" opacity="0.5"/>
+                            </g>
+
+                            <!-- 卡人配件: 恶魔角+尾巴 -->
+                            <g id="devilHorns" style="display:none">
+                                <polygon points="50,35 40,8 62,28" fill="#c62828"/>
+                                <polygon points="110,35 120,8 98,28" fill="#c62828"/>
+                                <path d="M 120 175 Q 145 165 140 140 Q 138 130 145 125" fill="none" stroke="#c62828" stroke-width="3" stroke-linecap="round"/>
+                                <polygon points="140,125 148,120 143,132" fill="#c62828"/>
+                            </g>
+
+                            <!-- 嘴炮配件: 表情丰富，嘴巴大 -->
+                            <g id="bigMouth" style="display:none">
+                                <ellipse cx="80" cy="82" rx="14" ry="10" fill="#c62828"/>
+                                <ellipse cx="80" cy="80" rx="12" ry="7" fill="#ff6b6b"/>
+                                <path d="M 70 80 Q 75 78, 80 80 Q 85 78, 90 80" fill="none" stroke="#fff" stroke-width="1"/>
+                                <!-- 对话气泡 -->
+                                <ellipse cx="130" cy="45" rx="22" ry="15" fill="#fff" stroke="#333" stroke-width="1"/>
+                                <polygon points="115,55 120,50 118,58" fill="#fff" stroke="#333" stroke-width="0.5"/>
+                                <text x="120" y="50" font-size="10" fill="#333">!</text>
+                            </g>
+
+                            <!-- 自闭配件: 口罩+兜帽 -->
+                            <g id="hoodie" style="display:none">
+                                <path d="M 42 55 Q 42 25 80 18 Q 118 25 118 55 L 118 40 Q 115 15 80 10 Q 45 15 42 40 Z" fill="#555"/>
+                                <path d="M 45 55 Q 45 35 80 30 Q 115 35 115 55" fill="none" stroke="#444" stroke-width="2"/>
+                                <rect x="55" y="75" width="50" height="12" rx="6" fill="#eee" stroke="#ccc" stroke-width="1"/>
+                                <text x="80" y="84" font-size="8" fill="#999" text-anchor="middle">...</text>
+                            </g>
+
+                            <!-- 好运配件: 四叶草+星星 -->
+                            <g id="luckyStars" style="display:none">
+                                <!-- 四叶草发夹 -->
+                                <g transform="translate(110, 35)">
+                                    <circle cx="0" cy="-6" r="5" fill="#4caf50"/>
+                                    <circle cx="-6" cy="0" r="5" fill="#4caf50"/>
+                                    <circle cx="0" cy="6" r="5" fill="#4caf50"/>
+                                    <circle cx="6" cy="0" r="5" fill="#4caf50"/>
+                                    <circle cx="0" cy="0" r="3" fill="#ffd700"/>
+                                </g>
+                                <!-- 周围星星 -->
+                                <text x="15" y="50" font-size="14" fill="#ffd700">✦</text>
+                                <text x="140" y="130" font-size="12" fill="#ffd700">✦</text>
+                            </g>
+
+                            <!-- 运营配件: 工具带+齿轮 -->
+                            <g id="tools" style="display:none">
+                                <!-- 工具腰带 -->
+                                <rect x="48" y="130" width="64" height="10" rx="3" fill="#795548" stroke="#5d4037" stroke-width="1"/>
+                                <rect x="60" y="128" width="8" height="14" rx="2" fill="#9e9e9e" stroke="#757575" stroke-width="0.5"/>
+                                <rect x="72" y="128" width="8" height="14" rx="2" fill="#9e9e9e" stroke="#757575" stroke-width="0.5"/>
+                                <rect x="84" y="128" width="8" height="14" rx="2" fill="#9e9e9e" stroke="#757575" stroke-width="0.5"/>
+                                <!-- 小齿轮 -->
+                                <circle cx="145" cy="145" r="8" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="2,1"/>
+                            </g>
+
+                            <!-- 计分配件: 宝石+算盘 -->
+                            <g id="gems" style="display:none">
+                                <!-- 宝石项链 -->
+                                <circle cx="80" cy="105" r="8" fill="#e91e63" stroke="#333" stroke-width="1"/>
+                                <circle cx="80" cy="105" r="4" fill="#f48fb1"/>
+                                <circle cx="80" cy="105" r="2" fill="#fff"/>
+                                <!-- 手中宝石 -->
+                                <polygon points="128,148 138,158 128,168 118,158" fill="#ff6b6b" stroke="#333" stroke-width="1"/>
+                                <polygon points="128,148 138,158 128,168 118,158" fill="url(#gemGrad)"/>
+                            </g>
+
+                            <!-- 故事配件: 书本+卷轴 -->
+                            <g id="storyBook" style="display:none">
+                                <!-- 手中书本 -->
+                                <rect x="125" y="140" width="20" height="25" rx="2" fill="#8d6e63" stroke="#5d4037" stroke-width="1"/>
+                                <rect x="127" y="142" width="8" height="21" fill="#fff5ee" stroke="#5d4037" stroke-width="0.5"/>
+                                <line x1="129" y1="148" x2="133" y2="148" stroke="#ccc" stroke-width="0.5"/>
+                                <line x1="129" y1="152" x2="133" y2="152" stroke="#ccc" stroke-width="0.5"/>
+                                <line x1="129" y1="156" x2="133" y2="156" stroke="#ccc" stroke-width="0.5"/>
+                                <!-- 书签 -->
+                                <polygon points="135,140 138,148 135,148" fill="#e91e63"/>
+                            </g>
+
+                            <!-- 表情: 默认眼睛 -->
+                            <g id="eyesDefault">
+                                <circle cx="64" cy="62" r="6" fill="#333"/>
+                                <circle cx="96" cy="62" r="6" fill="#333"/>
+                                <circle cx="66" cy="60" r="2" fill="#fff"/>
+                                <circle cx="98" cy="60" r="2" fill="#fff"/>
+                            </g>
+                            <!-- 表情: 卡人眼 (冷笑斜眼) -->
+                            <g id="eyesEvil" style="display:none">
+                                <path d="M 58 58 Q 64 53, 70 58" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M 90 58 Q 96 53, 102 58" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                            </g>
+                            <!-- 表情: 自闭眼 (闭眼) -->
+                            <g id="eyesShy" style="display:none">
+                                <path d="M 58 62 Q 64 58, 70 62" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M 90 62 Q 96 58, 102 62" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+                            </g>
+                            <!-- 表情: 嘴炮眼 (星星眼) -->
+                            <g id="eyesStar" style="display:none">
+                                <text x="54" y="68" font-size="16" fill="#ffd700">★</text>
+                                <text x="86" y="68" font-size="16" fill="#ffd700">★</text>
+                            </g>
+
+                            <!-- 腮红 -->
+                            <ellipse cx="48" cy="72" rx="7" ry="4" fill="#ffab91" opacity="0.4"/>
+                            <ellipse cx="112" cy="72" rx="7" ry="4" fill="#ffab91" opacity="0.4"/>
+
+                            <!-- 默认嘴巴 -->
+                            <path id="mouthDefault" d="M 72 80 Q 80 87, 88 80" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="mbti-type" id="mbtiType">INTJ</div>
+                <div class="personality-title" id="personalityTitle">布局控</div>
+
+                <!-- 桌游段位 -->
+                <div class="rank-badge" id="rankBadge">
+                    <span class="rank-icon">🏆</span>
+                    <span class="rank-text" id="rankText">钻石桌游玩家</span>
+                </div>
+
+                <div class="catchphrase" id="catchphrase">"这步我算了5分钟，你忍一下"</div>
+
+                <!-- 经典语录 -->
+                <div class="classic-quote" id="classicQuote"></div>
+
+                <div class="personality-desc" id="personalityDesc"></div>
+
+                <!-- 五维雷达图 -->
+                <div class="radar-section" id="radarSection">
+                    <h3>🎯 你的桌游风格雷达</h3>
+                    <div class="radar-container">
+                        <canvas id="radarCanvas" width="300" height="300"></canvas>
+                    </div>
+                </div>
+
+                <div class="best-partner" id="bestPartner"></div>
+
+                <!-- 段位专属展示区域 -->
+                <div class="pro-section" id="proSection" style="display:none;">
+                    <!-- 段位徽章 -->
+                    <div class="pro-badge" id="proBadge">
+                        <div class="pro-emoji" id="proEmoji">🥉</div>
+                        <div class="pro-power" id="proPower">战力值 0-20</div>
+                    </div>
+
+                    <!-- 得分进度条 -->
+                    <div class="pro-progress-container">
+                        <div class="pro-progress-label">
+                            <span>段位进度</span>
+                            <span id="proProgressText">3 / 10 题</span>
+                        </div>
+                        <div class="pro-progress-bar">
+                            <div class="pro-progress-fill" id="proProgressFill"></div>
+                        </div>
+                    </div>
+
+                    <!-- 段位故事 -->
+                    <div class="pro-story" id="proStory"></div>
+
+                    <!-- 段位特权 -->
+                    <div class="pro-privilege" id="proPrivilege"></div>
+
+                    <!-- 进阶提示 -->
+                    <div class="pro-next" id="proNext"></div>
+                </div>
+
+                <div class="recommend-section">
+                    <h3>🎮 推荐桌游</h3>
+                    <div id="gameTags"></div>
+                </div>
+            </div>
+
+            <div class="share-section">
+                <button class="btn-share" onclick="shareResult()">📤 分享结果</button>
+                <button class="btn-copy" onclick="copyText()">📋 复制朋友圈文案</button>
+                <button class="btn-copy" onclick="location.reload()" style="border-color:#ccc; color:#999;">🔄 再测一次</button>
+                <button class="btn-back" onclick="goHome()">🏠 返回首页</button>
+            </div>
+
+            <div class="shop-info">
+                <h4>🥒 酸黄瓜桌游俱乐部</h4>
+                <p>杭州 · 开了6年的桌游店</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // 禁止右键、F12、Ctrl+Shift+I/J/C、Ctrl+U
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                (e.ctrlKey && e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+            }
+        });
+
+        // 题库：从JSON文件加载
+        // 维度：风格（宽容/卡人）、目标（计分/故事）、社交（嘴炮/自闭）、能力（好运/运营）
+        // 维度1: 25题 (0-24), 维度2: 20题 (25-44), 维度3: 20题 (45-64), 维度4: 20题 (65-84)
+        let allQuestions = [];
+        let dataLoaded = false;
+        let loadError = false;
+
+        // 加载题库JSON
+        async function loadQuestions() {
+            try {
+                const response = await fetch('questions.json');
+                if (!response.ok) throw new Error('Failed to load');
+                allQuestions = await response.json();
+                dataLoaded = true;
+                console.log(`Loaded ${allQuestions.length} questions`);
+            } catch (e) {
+                loadError = true;
+                console.error('Failed to load questions.json:', e);
+                // 降级：显示错误提示
+                document.querySelector('.subtitle').innerHTML =
+                    '题库加载失败，请刷新页面重试<br><small>如果问题持续，请联系管理员</small>';
+            }
+        }
+        loadQuestions();
+
+        // 16种桌游隐藏人格
+        const personalityData = {
+            '宽容-计分-嘴炮-好运': { name: '欧皇交际花', tag: '佛系精算，靠运气和口才赢得人心', quote: '"别急，骰子会站在我这边的"', desc: '你表面上笑嘻嘻，心里却在默默算分。靠运气和口才双管齐下，朋友喜欢跟你玩，因为你从不给压力，但分数总是悄悄被你拿走。', partner: '冷血计分器——你的佛系刚好中和ta的杀气', color: '#ff6b6b' },
+            '宽容-计分-嘴炮-运营': { name: '社交精算师', tag: '善于计算又乐于交流，用策略带节奏', quote: '"听我的，这把咱们这么打"', desc: '你是桌上最会说话的战略家。一边聊天一边布局，把复杂规则用最通俗的方式讲清楚。朋友信你，不是因为你人好，是因为你算得准。', partner: '福星隐士——ta的直觉能帮你打破过度分析的僵局', color: '#ffa94d' },
+            '宽容-计分-自闭-好运': { name: '闷声欧皇', tag: '低调攒分，运气爆棚却不露声色', quote: '"…（默默把token收走）"', desc: '你不爱说话，但每次掷骰子都像开了挂。朋友们以为你在发呆，其实你在暗中攒分。等他们反应过来，你已经赢了。', partner: '幸运搅屎棍——ta的嘴炮刚好替你活跃气氛', color: '#ffd43b' },
+            '宽容-计分-自闭-运营': { name: '孤独算盘', tag: '独自默默算计，每一步都精准无误', quote: '"这步我算了5分钟，你忍一下"', desc: '你享受一个人默默推演的过程。不社交、不聊天，但每一步都经过精密计算。你是桌游界的扫地僧，不鸣则已，一鸣惊人。', partner: '社交精算师——ta能帮你把理论变成胜利的战术', color: '#74c0fc' },
+            '宽容-故事-嘴炮-好运': { name: '幸运说书人', tag: '靠运气讲故事，总能化险为夷', quote: '"这局故事太精彩了，谁还在乎输赢"', desc: '你是天生的故事大王，靠运气和口才编织精彩剧情。就算局面崩盘，你也能讲出一个让人捧腹的故事。跟你玩，永远不会无聊。', partner: '暗影收割者——ta的沉默刚好衬托你的热闹', color: '#ff8787' },
+            '宽容-故事-嘴炮-运营': { name: '故事外交官', tag: '用嘴炮编织剧情，用运营推动发展', quote: '"来，新人我教你，这局故事这么走"', desc: '你是天生的主持人，能用嘴炮把一局普通游戏变成史诗大片。你擅长读空气，知道什么时候该推进、什么时候该等一等。没有你，这桌游戏开不起来。', partner: '孤独算盘——ta的精准能帮你把故事落地', color: '#69db7c' },
+            '宽容-故事-自闭-好运': { name: '福星隐士', tag: '独自沉浸剧情，运气助他奇遇连连', quote: '"我在角色里走不出来了"', desc: '你容易被世界观打动，会为角色故事而流泪。运气总是眷顾你，但你不张扬。你更在乎"这局游戏讲了什么故事"而不是"谁赢了"。', partner: '毒舌操盘手——ta的毒舌能帮你打破沉浸的孤独', color: '#da77f2' },
+            '宽容-故事-自闭-运营': { name: '沉默编剧', tag: '安静构思剧本，内心戏十足', quote: '"这个token好好看啊"', desc: '你是桌游圈的审美担当，安静地构思着自己的故事。你可能不是最强选手，但你总能发现游戏里那些别人注意不到的美。内心戏比谁都丰富。', partner: '社交精算师——ta能把你的创意讲给更多人听', color: '#a78bfa' },
+            '卡人-计分-嘴炮-好运': { name: '笑面捣蛋鬼', tag: '笑着卡人，运气加持，防不胜防', quote: '"我骗你的，但你可以信"', desc: '你笑着就把人卡了，运气还总是站在你这边。朋友被你卡了也不生气，因为你笑得实在太真诚了。你是桌游界的笑面虎，人人又怕又爱。', partner: '沉默编剧——ta的安静刚好让你有施展空间', color: '#f06595' },
+            '卡人-计分-嘴炮-运营': { name: '毒舌操盘手', tag: '嘴上不饶人，手上精布局，专搞心态', quote: '"你这一步不合规"', desc: '你是桌上的大魔王。嘴上不饶人，手上精布局，专搞人心态。朋友跟你玩又爱又恨，但每次都被你安排得明明白白。', partner: '福星隐士——ta的佛系刚好化解你的杀气', color: '#e03131' },
+            '卡人-计分-自闭-好运': { name: '暗影收割者', tag: '沉默中卡分暴击，全靠天选之手', quote: '"…（沉默地赢了）"', desc: '你不说话，但每次出手都是暴击。运气好到离谱，朋友以为你在开挂。你是桌游界的刺客，沉默中完成收割，事了拂衣去。', partner: '社交精算师——ta的嘴炮刚好替你解释操作', color: '#868e96' },
+            '卡人-计分-自闭-运营': { name: '冷血计分器', tag: '无情计算，精确卡位，毫无感情', desc: '你是无情的得分机器。不讲人情、不搞社交，每一步都精确到小数点后两位。朋友跟你玩需要做好心理准备，因为你是真的在算分，不是在玩。', partner: '幸运说书人——ta的故事能帮你找回游戏的乐趣', color: '#495057' },
+            '卡人-故事-嘴炮-好运': { name: '幸运搅屎棍', tag: '嘴炮破坏剧情，运气让他总能得逞', quote: '"规则是什么？能吃吗？"', desc: '你是规则的破坏者，用嘴炮和运气把一切搞得天翻地覆。朋友被你气得牙痒痒，但每次都被你莫名其妙的运气折服。', partner: '沉默编剧——ta的安静刚好让你有表演空间', color: '#fab005' },
+            '卡人-故事-嘴炮-运营': { name: '阴谋家', tag: '精心策划每个冲突，让故事按他剧本走', quote: '"听我的，这把这么打"', desc: '你是天生的阴谋家，精心策划每个冲突，让故事完全按你的剧本走。朋友以为自己在玩，其实早就是你故事里的角色了。', partner: '闷声欧皇——ta的低调刚好衬托你的高调', color: '#be4bdb' },
+            '卡人-故事-自闭-好运': { name: '天灾独狼', tag: '独行搞事，运气如天灾，所到之处寸草不生', quote: '"梭哈，信我"', desc: '你是独狼，但运气好到像天灾。所到之处寸草不生，朋友被你卡了也只能认命。你是桌游界的天灾级玩家，又恨又服。', partner: '社交精算师——ta能帮你把天灾变成可控的灾难', color: '#22b8cf' },
+            '卡人-故事-自闭-运营': { name: '暗黑编剧', tag: '默默撰写悲剧，每一步都是伏笔', quote: '"这步我算了5分钟，你忍一下"', desc: '你是暗黑系的剧本大师，默默撰写悲剧，每一步都是伏笔。朋友以为你在发呆，其实你在编织一张大网。等他们发现时，已经无处可逃了。', partner: '幸运说书人——ta的嘴炮能帮你把暗黑剧本讲得更精彩', color: '#339af0' }
+        };
+
+        // 经典语录
+        const classicQuotes = {
+            '宽容-计分-嘴炮-好运': ['"别急，骰子会站在我这边的"', '"朋友第一，分数第二"', '"笑一笑，分数自然来"'],
+            '宽容-计分-嘴炮-运营': ['"听我的，这把咱们这么打"', '"规则我来解释，你们跟着走"', '"别慌，我算过了"'],
+            '宽容-计分-自闭-好运': ['"…（默默把token收走）"', '"我运气好像不错"', '"诶？怎么又赢了"'],
+            '宽容-计分-自闭-运营': ['"这步我算了5分钟，你忍一下"', '"让我把终局算完再吃饭"', '"你的最优解在我眼里只是局部最优"'],
+            '宽容-故事-嘴炮-好运': ['"这局故事太精彩了，谁还在乎输赢"', '"等等，这个剧情走向不对"', '"哈哈哈哈刚才那个太搞笑了"'],
+            '宽容-故事-嘴炮-运营': ['"来，新人我教你，这局故事这么走"', '"大家别吵了，听我说"', '"这局我来带节奏"'],
+            '宽容-故事-自闭-好运': ['"我在角色里走不出来了"', '"这个故事太感人了…"', '"我不在乎输赢，我在乎故事"'],
+            '宽容-故事-自闭-运营': ['"这个token好好看啊"', '"这个游戏画风太美了"', '"我能把版图带回家吗？"'],
+            '卡人-计分-嘴炮-好运': ['"我骗你的，但你可以信"', '"规则是什么？能吃吗？"', '"梭哈，信我"'],
+            '卡人-计分-嘴炮-运营': ['"你这一步不合规"', '"别插话，按顺序来"', '"这个游戏应该这么玩"'],
+            '卡人-计分-自闭-好运': ['"…（沉默地赢了）"', '"诶？又暴击了"', '"运气好也是实力的一部分"'],
+            '卡人-计分-自闭-运营': ['"让我再看一眼终局计分"', '"规则书里不是这样写的…让我再看看"', '"你的combo我早就看穿了"'],
+            '卡人-故事-嘴炮-好运': ['"规则就是用来打破的"', '"这个策略太无聊了，换个花样"', '"不赌大的没意思"'],
+            '卡人-故事-嘴炮-运营': ['"听我的，这把这么打"', '"你们都不行，我来"', '"赢是结果，不是过程"'],
+            '卡人-故事-自闭-好运': ['"梭哈，信我"', '"这把稳了，all in"', '"天选之人，没办法"'],
+            '卡人-故事-自闭-运营': ['"这步我算了5分钟，你忍一下"', '"你的combo在我眼里只是局部最优"', '"让我把终局算完再吃饭"']
+        };
+
+        // 米宝颜色映射
+        const meepleColors = {
+            '宽容-计分-嘴炮-好运': { body: '#ff6b6b', head: '#ff8787' },
+            '宽容-计分-嘴炮-运营': { body: '#ffa94d', head: '#ffc078' },
+            '宽容-计分-自闭-好运': { body: '#ffd43b', head: '#ffe066' },
+            '宽容-计分-自闭-运营': { body: '#74c0fc', head: '#a5d8ff' },
+            '宽容-故事-嘴炮-好运': { body: '#ff8787', head: '#ffa8a8' },
+            '宽容-故事-嘴炮-运营': { body: '#69db7c', head: '#8ce99a' },
+            '宽容-故事-自闭-好运': { body: '#da77f2', head: '#e599f7' },
+            '宽容-故事-自闭-运营': { body: '#a78bfa', head: '#b197fc' },
+            '卡人-计分-嘴炮-好运': { body: '#f06595', head: '#f783ac' },
+            '卡人-计分-嘴炮-运营': { body: '#e03131', head: '#f03e3e' },
+            '卡人-计分-自闭-好运': { body: '#868e96', head: '#adb5bd' },
+            '卡人-计分-自闭-运营': { body: '#495057', head: '#5c636a' },
+            '卡人-故事-嘴炮-好运': { body: '#fab005', head: '#fcc419' },
+            '卡人-故事-嘴炮-运营': { body: '#be4bdb', head: '#cc5de8' },
+            '卡人-故事-自闭-好运': { body: '#22b8cf', head: '#3bc9db' },
+            '卡人-故事-自闭-运营': { body: '#339af0', head: '#4dabf7' }
+        };
+
+        // 段位计算
+        function getRank(personalityKey) {
+            const data = personalityData[personalityKey];
+            const isCarding = personalityKey.includes('卡人');
+            const isStory = personalityKey.includes('故事');
+            if (isCarding && isStory) {
+                return { rank: '暗黑系玩家', class: 'diamond', icon: '🌑' };
+            } else if (isCarding) {
+                return { rank: '策略系玩家', class: 'platinum', icon: '⚔️' };
+            } else if (isStory) {
+                return { rank: '故事系玩家', class: 'gold', icon: '📖' };
+            } else {
+                return { rank: '佛系玩家', class: 'silver', icon: '☕' };
+            }
+        }
+
+        // 计算雷达图数据
+        function getRadarData(personalityKey) {
+            // 风格宽容度, 故事沉浸度, 社交活跃度, 运气依赖度
+            const parts = personalityKey.split('-');
+            const isKuanRong = parts[0] === '宽容';
+            const isStory = parts[1] === '故事';
+            const isZuiPao = parts[2] === '嘴炮';
+            const isHaoYun = parts[3] === '好运';
+
+            return [
+                isKuanRong ? 80 : 20,  // 风格宽容度
+                isStory ? 85 : 25,     // 故事沉浸度
+                isZuiPao ? 90 : 15,    // 社交活跃度
+                isHaoYun ? 80 : 25,    // 运气依赖度
+                !isHaoYun ? 85 : 30    // 运营策略度
+            ];
+        }
+
+        // 绘制雷达图
+        function drawRadarChart(personalityKey) {
+            const canvas = document.getElementById('radarCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            const cx = w / 2;
+            const cy = h / 2;
+            const maxR = 100;
+            const labels = ['风格宽容度', '故事沉浸度', '社交活跃度', '运气依赖度', '运营策略度'];
+            const data = getRadarData(personalityKey);
+            const maxVal = 100;
+            const angleStep = (Math.PI * 2) / 5;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // 绘制背景网格
+            ctx.strokeStyle = 'rgba(129, 199, 132, 0.3)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i <= 5; i++) {
+                ctx.beginPath();
+                const r = (maxR / 5) * i;
+                for (let j = 0; j < 5; j++) {
+                    const angle = j * angleStep - Math.PI / 2;
+                    const x = cx + r * Math.cos(angle);
+                    const y = cy + r * Math.sin(angle);
+                    if (j === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+
+            // 绘制轴线
+            for (let i = 0; i < 5; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const x = cx + maxR * Math.cos(angle);
+                const y = cy + maxR * Math.sin(angle);
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+
+            // 绘制数据区域
+            const pColor = personalityData[personalityKey].color;
+            ctx.beginPath();
+            ctx.fillStyle = pColor + '40';
+            ctx.strokeStyle = pColor;
+            ctx.lineWidth = 2;
+            for (let i = 0; i < 5; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const r = (data[i] / maxVal) * maxR;
+                const x = cx + r * Math.cos(angle);
+                const y = cy + r * Math.sin(angle);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // 绘制数据点
+            for (let i = 0; i < 5; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const r = (data[i] / maxVal) * maxR;
+                const x = cx + r * Math.cos(angle);
+                const y = cy + r * Math.sin(angle);
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = pColor;
+                ctx.fill();
+            }
+
+            // 绘制标签
+            ctx.font = '13px -apple-system, sans-serif';
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < 5; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const labelR = maxR + 25;
+                const x = cx + labelR * Math.cos(angle);
+                const y = cy + labelR * Math.sin(angle);
+                ctx.fillText(labels[i], x, y + 5);
+            }
+        }
+
+        let quizMode = 'mbti'; // 'mbti' 或 'pro' 或 'guess'
+        let proScore = 0;
+        let guessScore = 0;
+        let guessResults = []; // 记录每道题的答题情况
+
+        // 表情包猜桌游题目（用表情包形式猜桌游）
+        const guessQuestions = [
+            {
+                meme: { top: "开局时", emoji: "🏝️", middle: "骰出7后", bottom: "你的心态", bottomEmoji: "💀" },
+                answer: "卡坦岛",
+                options: ["卡坦岛", "璀璨宝石", "殖民火星", "铁路环游"]
+            },
+            {
+                meme: { top: "攒了5颗", emoji: "💎💎💎💎", middle: "一回合后", bottom: "被截胡了", bottomEmoji: "😭" },
+                answer: "璀璨宝石",
+                options: ["卡坦岛", "璀璨宝石", "卡卡颂", "七大奇迹"]
+            },
+            {
+                meme: { top: "火车长", emoji: "🚂🚂🚂", middle: "终点没到", bottom: "没车厢了", bottomEmoji: "🤡" },
+                answer: "铁路环游",
+                options: ["大西铁路", "铁路环游", "工业革命", "蒸汽时代"]
+            },
+            {
+                meme: { top: "抽到一张", emoji: "🐦", middle: "又抽到一张", bottom: "全是鸟", bottomEmoji: "😶" },
+                answer: "展翅翱翔",
+                options: ["瘟疫危机", "展翅翱翔", "农场主", "奥丁的盛宴"]
+            },
+            {
+                meme: { top: "抽到一块", emoji: "🏰", middle: "又一块", bottom: "放不下了", bottomEmoji: "🤔" },
+                answer: "卡卡颂",
+                options: ["卡卡颂", "卡坦岛", "七大奇迹", "勃艮第城堡"]
+            },
+            {
+                meme: { top: "对面打了", emoji: "🇺🇸🇺", middle: "古巴导弹", bottom: "核战了", bottomEmoji: "☢️" },
+                answer: "冷战热斗",
+                options: ["冷战热斗", "三国杀", "政变", "风声"]
+            },
+            {
+                meme: { top: "播种", emoji: "🌾", middle: "收割", bottom: "饿死了", bottomEmoji: "💀" },
+                answer: "农场主",
+                options: ["农场主", "奥丁的盛宴", "瘟疫危机", "展翅翱翔"]
+            },
+            {
+                meme: { top: "骰子全", emoji: "🎲🎲", middle: "还是不行", bottom: "没鱼吃", bottomEmoji: "🐟❌" },
+                answer: "奥丁的盛宴",
+                options: ["奥丁的盛宴", "展翅翱翔", "农场主", "血染钟楼"]
+            },
+            {
+                meme: { top: "探索地城", emoji: "🗡️🛡️", middle: "san值", bottom: "掉光了", bottomEmoji: "🧠" },
+                answer: "诡镇奇谈：卡牌版",
+                options: ["诡镇奇谈：卡牌版", "疯狂诡宅", "瘟疫危机", "灵迹岛"]
+            },
+            {
+                meme: { top: "建金字塔", emoji: "🏛️", middle: "造奇观", bottom: "被抢了", bottomEmoji: "😤" },
+                answer: "历史巨轮",
+                options: ["历史巨轮", "殖民火星", "领国者", "伯明翰"]
+            },
+            {
+                meme: { top: "掷骰子", emoji: "🎲", middle: "再掷", bottom: "还是不行", bottomEmoji: "🙃" },
+                answer: "马可波罗2：可汗的托付",
+                options: ["重塑火星", "沙丘：帝国", "马可波罗2：可汗的托付", "星际牛仔"]
+            },
+            {
+                meme: { top: "说书人", emoji: "📖", middle: "出题", bottom: "全猜对了", bottomEmoji: "🎯" },
+                answer: "只言片语",
+                options: ["只言片语", "传情画意", "行动代号", "猜心俱乐部"]
+            },
+            {
+                meme: { top: "狼人跳了", emoji: "🐺", middle: "村民投票", bottom: "投错了", bottomEmoji: "😱" },
+                answer: "阿瓦隆",
+                options: ["阿瓦隆", "三国杀", "政变", "血染钟楼"]
+            },
+            {
+                meme: { top: "工人放哪", emoji: "👷", middle: "这格那格", bottom: "纠结死了", bottomEmoji: "🤯" },
+                answer: "灵迹岛",
+                options: ["灵迹岛", "勃艮第城堡", "农场主", "大西铁路"]
+            },
+            {
+                meme: { top: "合作抗疫", emoji: "🦠", middle: "疫情爆发", bottom: "又炸了", bottomEmoji: "💥" },
+                answer: "瘟疫危机",
+                options: ["瘟疫危机", "诡镇奇谈", "幽港迷城", "全球惊悚"]
+            }
+        ];
+        const proQuestions = [
+            { text: "DBG是什么？", options: [{ text: "一种卡牌游戏机制", correct: true }, { text: "某款桌游里的术语", correct: false }, { text: "一种桌游策略", correct: false }, { text: "一种桌游胜利条件的说法", correct: false }] },
+            { text: "璀璨宝石的核心玩法属于哪一类？", options: [{ text: "牌库构筑", correct: false }, { text: "资源收集 + 卡牌分数", correct: true }, { text: "区域打仗占地", correct: false }, { text: "身份推理骗人", correct: false }] },
+            { text: "桌游LCG和TCG最大的区别在于？", options: [{ text: "画风好不好看", correct: false }, { text: "是否随机抽卡包", correct: true }, { text: "能不能多人玩", correct: false }, { text: "有没有版图", correct: false }] },
+            { text: "政变这款桌游核心是什么玩法？", options: [{ text: "合作解谜", correct: false }, { text: "身份吹牛 + 心理博弈", correct: true }, { text: "工人放置种田", correct: false }, { text: "骰子打怪闯关", correct: false }] },
+            { text: "以下哪款属于典型德式策略桌游（德策）？", options: [{ text: "洞穴农夫", correct: true }, { text: "赌命大赛", correct: false }, { text: "诺丁汉警长", correct: false }, { text: "污痕圣杯", correct: false }] },
+            { text: "以下哪款属于身份推理类桌游？", options: [{ text: "花间小路", correct: false }, { text: "拉斯维加斯", correct: false }, { text: "冰冷的她醒来之前", correct: true }, { text: "龙翼翱翔", correct: false }] },
+            { text: "轮抽（Draft）桌游机制的核心是？", options: [{ text: "掷骰子走步数", correct: false }, { text: "选一张牌、剩下传给下家", correct: true }, { text: "占领版图格子", correct: false }, { text: "花钱买卡牌", correct: false }] },
+            { text: "诡镇奇谈主要是什么题材？", options: [{ text: "中世纪经营", correct: false }, { text: "克苏鲁恐怖叙事", correct: true }, { text: "星际战争", correct: false }, { text: "现代经商", correct: false }] },
+            { text: "只言片语属于什么类型桌游？", options: [{ text: "重度策略", correct: false }, { text: "聚会脑洞猜词", correct: true }, { text: "硬核战棋", correct: false }, { text: "工人放置种田", correct: false }] },
+            { text: "桌游「工人放置」机制通俗理解是？", options: [{ text: "抢格子干活拿资源", correct: true }, { text: "掷骰子决定行动", correct: false }, { text: "互相骗身份", correct: false }, { text: "组队打BOSS", correct: false }] },
+            { text: "冷战热斗整体属于哪类桌游？", options: [{ text: "轻松聚会毛线", correct: false }, { text: "双人硬核策略对战", correct: true }, { text: "猜词脑洞", correct: false }, { text: "合作逃生", correct: false }] },
+            { text: "以下哪款不是合作类桌游？", options: [{ text: "瘟疫危机", correct: false }, { text: "幽港迷城", correct: false }, { text: "政变", correct: true }, { text: "全球惊悚", correct: false }] },
+            { text: "圣托里尼最核心的玩法亮点是？", options: [{ text: "大量卡牌组合", correct: false }, { text: "立体建塔 + 极简策略对战", correct: true }, { text: "资源囤货攒分", correct: false }, { text: "身份隐藏骗人", correct: false }] },
+            { text: "DBG牌库构筑桌游的核心特点是？", options: [{ text: "开局固定手牌不变", correct: false }, { text: "对局中不断买牌优化自己牌库", correct: true }, { text: "靠占地得分", correct: false }, { text: "靠吹牛获胜", correct: false }] },
+            { text: "阿瓦隆这类桌游最看重什么？", options: [{ text: "计算资源数值", correct: false }, { text: "逻辑推理 + 话术博弈", correct: true }, { text: "骰子运气", correct: false }, { text: "版图布局", correct: false }] },
+            { text: "以下哪款属于美式桌游风格？", options: [{ text: "图拉真", correct: false }, { text: "神秘大地", correct: false }, { text: "疯狂诡宅", correct: true }, { text: "拉格兰哈庄园", correct: false }] },
+            { text: "德式策略桌游普遍特点是？", options: [{ text: "重剧情、重角色扮演", correct: false }, { text: "重计算、少运气、重规划", correct: true }, { text: "全靠吹牛撒谎", correct: false }, { text: "大量随机骰子", correct: false }] },
+            { text: "聚会毛线桌游的主要特点是？", options: [{ text: "规则极复杂、对局几小时", correct: false }, { text: "上手快、欢乐互动、不烧脑", correct: true }, { text: "全是单人游玩", correct: false }, { text: "需要大量卡牌记牌", correct: false }] },
+            { text: "权力的游戏桌游核心机制包含？", options: [{ text: "区域控制 + 外交密谋", correct: true }, { text: "纯猜词互动", correct: false }, { text: "种田养动物", correct: false }, { text: "牌库构筑抽卡", correct: false }] },
+            { text: "展翅翱翔桌游的主题和玩法是？", options: [{ text: "战争占地打仗", correct: false }, { text: "收集鸟类卡牌组构筑计分", correct: true }, { text: "身份推理骗人", correct: false }, { text: "骰子闯关冒险", correct: false }] },
+            { text: "桌游「区域控制」机制指的是？", options: [{ text: "抢版图地盘获得分数或胜利", correct: true }, { text: "轮流选行动格子", correct: false }, { text: "传牌选卡", correct: false }, { text: "猜别人身份", correct: false }] },
+            { text: "以下哪款最适合纯新手入门？", options: [{ text: "发明简史", correct: false }, { text: "卡卡颂", correct: true }, { text: "奥丁盛宴", correct: false }, { text: "大魔术师", correct: false }] },
+            { text: "诡镇奇谈卡牌版属于哪种发行模式？", options: [{ text: "TCG随机抽包", correct: false }, { text: "LCG固定扩展", correct: true }, { text: "一次性无扩展", correct: false }, { text: "绝版不再复刻", correct: false }] },
+            { text: "双人桌游更适合下面哪一款？", options: [{ text: "看板", correct: false }, { text: "炸弹克星", correct: true }, { text: "只言片语", correct: false }, { text: "天合小队", correct: false }] },
+            { text: "桌游里「可变玩家能力」指的是？", options: [{ text: "每局每个人角色特长不一样", correct: true }, { text: "骰子越投越强", correct: false }, { text: "卡牌数量随机变化", correct: false }, { text: "规则随时可以改", correct: false }] },
+            { text: "以下哪款不属于重策桌游？", options: [{ text: "农场主", correct: false }, { text: "矮人掘金", correct: true }, { text: "帝国曙光", correct: false }, { text: "奥地利大饭店", correct: false }] },
+            { text: "瘟疫危机的核心玩法是？", options: [{ text: "互相对战抢分", correct: false }, { text: "全员合作拯救世界抗疫", correct: true }, { text: "身份隐藏互坑", correct: false }, { text: "立体建造拼图", correct: false }] },
+            { text: "璀璨宝石里贵族卡牌的作用是？", options: [{ text: "干扰对手扣分", correct: false }, { text: "满足条件免费拿分数", correct: true }, { text: "直接干掉对手资源", correct: false }, { text: "更换游戏规则", correct: false }] },
+            { text: "经典桌游大西铁路主题接近？", options: [{ text: "铁路经营 + 路线规划", correct: true }, { text: "海岛资源开荒", correct: false }, { text: "魔法打怪升级", correct: false }, { text: "猜词画画互动", correct: false }] },
+            { text: "桌游「行动点」机制的意思是？", options: [{ text: "每回合有固定点数分配做事情", correct: true }, { text: "掷骰子决定走几步", correct: false }, { text: "传牌轮流选卡", correct: false }, { text: "靠聊天获得分数", correct: false }] },
+            { text: "以下哪种不属于桌游主流分类？", options: [{ text: "德策", correct: false }, { text: "美式", correct: false }, { text: "毛线聚会", correct: false }, { text: "电子竞技", correct: true }] },
+            { text: "疯狂诡宅主打体验是？", options: [{ text: "经营种田算账", correct: false }, { text: "剧情探索 + 恐怖解谜", correct: true }, { text: "资源囤货攒分", correct: false }, { text: "外交谈判占地", correct: false }] },
+            { text: "卡坦岛获胜关键主要靠？", options: [{ text: "纯运气掷骰子", correct: false }, { text: "资源交易 + 版图规划", correct: true }, { text: "隐藏身份骗人", correct: false }, { text: "卡牌连锁套路", correct: false }] },
+            { text: "下面哪一个是身份类桌游的核心乐趣？", options: [{ text: "精密数学计算", correct: false }, { text: "隐藏身份、推理敌我", correct: true }, { text: "搭建立体模型", correct: false }, { text: "长时间资源积累", correct: false }] },
+            { text: "工人放置类桌游常见玩法是？", options: [{ text: "抢有限行动格子，规划回合节奏", correct: true }, { text: "不停抽卡打牌", correct: false }, { text: "互相吹牛投票", correct: false }, { text: "掷骰子打怪", correct: false }] },
+            { text: "幽港迷城更适合哪种游玩偏好？", options: [{ text: "喜欢欢乐猜词", correct: false }, { text: "喜欢长线剧情合作闯关", correct: true }, { text: "喜欢快速对战10分钟一局", correct: false }, { text: "喜欢纯数值算账", correct: false }] },
+            { text: "桌游扩展包的主要作用是？", options: [{ text: "修改基础规则彻底大变样", correct: false }, { text: "增加新卡牌、角色、版图丰富玩法", correct: true }, { text: "只能换皮肤画风", correct: false }, { text: "降低游戏难度给新手", correct: false }] },
+            { text: "以下哪款是典型聚会暖场桌游？", options: [{ text: "奥丁的盛宴", correct: false }, { text: "传情画意", correct: true }, { text: "卡拉拉皇宫", correct: false }, { text: "诡镇奇谈", correct: false }] },
+            { text: "德策和美式桌游最大区别是？", options: [{ text: "一个有版图一个没版图", correct: false }, { text: "德策重策略计算，美式重剧情冒险", correct: true }, { text: "一个能多人一个只能双人", correct: false }, { text: "一个有骰子一个没骰子", correct: false }] },
+            { text: "新手入坑桌游最合理的顺序是？", options: [{ text: "直接上伯明翰、盖亚计划", correct: false }, { text: "先聚会毛线→经典中度→再重度德策/美式", correct: true }, { text: "只玩身份类不玩其他", correct: false }, { text: "只玩重策不玩轻松局", correct: false }] }
+        ];
+
+        // 桌游段位结果（青铜→王者）
+        const proResults = {
+            '青铜': {
+                title: '青铜桌游玩家',
+                desc: '你已经比99%的人强了，因为你点开了这个测试。',
+                detail: '你的桌游之旅才刚刚开始。别慌，酸黄瓜的架子上至少有200款游戏等你探索。',
+                emoji: '🥉',
+                class: 'bronze',
+                color: '#cd7f32',
+                power: '战力值 0-20',
+                privilege: '特权：可以在店里免费借用规则书',
+                weakness: '建议：从《卡坦岛》《UNO》开始，先建立兴趣',
+                nextRank: '白银',
+                nextGap: 1
+            },
+            '白银': {
+                title: '白银桌游玩家',
+                desc: '你知道token和米宝不是一回事了。',
+                detail: '你已经能叫出几款桌游的名字，甚至开始区分德式和美式。继续探索，更大的世界在等你。',
+                emoji: '🥈',
+                class: 'silver',
+                color: '#9e9e9e',
+                power: '战力值 21-40',
+                privilege: '特权：可以参加店里新手专场',
+                weakness: '建议：试试《璀璨宝石》《七大奇迹》，感受策略的乐趣',
+                nextRank: '黄金',
+                nextGap: 1
+            },
+            '黄金': {
+                title: '黄金桌游玩家',
+                desc: '你说"来一局"的时候，眼里有光。',
+                detail: '你已经不是那个只会问"规则复杂吗"的新手了。你知道什么叫set up，什么叫AP，甚至开始研究BGG排行榜。',
+                emoji: '🥇',
+                class: 'gold',
+                color: '#d4a017',
+                power: '战力值 41-60',
+                privilege: '特权：可以预约店里任意一款中重策游戏',
+                weakness: '建议：挑战《灵迹岛》《重塑火星》，进入重策世界',
+                nextRank: '铂金',
+                nextGap: 2
+            },
+            '铂金': {
+                title: '铂金桌游玩家',
+                desc: '你是桌子上的定海神针，规则问你就对了。',
+                detail: '你收藏的桌游可能比酸黄瓜的架子还多。你的存在让这桌游戏开得更稳。',
+                emoji: '💎',
+                class: 'platinum',
+                color: '#00b8d4',
+                power: '战力值 61-80',
+                privilege: '特权：可以带新人组局，当一次说书人',
+                weakness: '建议：尝试《伯明翰》《历史巨轮》，冲击更高段位',
+                nextRank: '钻石',
+                nextGap: 2
+            },
+            '钻石': {
+                title: '钻石桌游玩家',
+                desc: '你说话已经自带桌游术语了。',
+                detail: '你说"这局太短"，意思是"才4小时？"你是行走的桌游百科，规则问你就对了。',
+                emoji: '💠',
+                class: 'diamond',
+                color: '#7c4dff',
+                power: '战力值 81-95',
+                privilege: '特权：可以参与店里新游戏测评，优先体验新游',
+                weakness: '建议：只差最后一步！再对2题，你就是王者',
+                nextRank: '王者',
+                nextGap: 1
+            },
+            '王者': {
+                title: '王者桌游玩家',
+                desc: '你的名字在BGG上有专属页面。',
+                detail: '你就是传说中的那个人。可以盲讲规则、一眼看穿combo、闭眼算分。桌游界需要你。',
+                emoji: '👑',
+                class: 'master',
+                color: '#ffd700',
+                power: '战力值 96-100',
+                privilege: '特权：酸黄瓜终身荣誉会员，到店即享VIP待遇',
+                weakness: '建议：你已经站在顶峰了，带带新人吧！',
+                nextRank: '已是巅峰',
+                nextGap: 0
+            }
+        };
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const icons = ['🎲', '🃏', '⭐', '❤', '♠', '♦', '♣'];
+            for (let i = 0; i < 15; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.textContent = icons[Math.floor(Math.random() * icons.length)];
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
+                p.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+        function shuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // 当前人格key（用于分享）
+        let currentPersonalityKey = '';
+
+        // 从游戏池中随机选2个不重复的
+        function pickRandomGames(pool) {
+            const shuffled = shuffle(pool);
+            return [shuffled[0], shuffled[1]];
+        }
+
+        function startMBTI() {
+            if (!dataLoaded) {
+                showToast('题库加载中，请稍后再试');
+                return;
+            }
+            quizMode = 'mbti';
+            // 从4个维度各抽3道 = 共12道
+            // 维度1: 25题(0-24), 维度2: 20题(25-44), 维度3: 20题(45-64), 维度4: 20题(65-84)
+            const dim1 = shuffle(allQuestions.slice(0, 25)).slice(0, 3);
+            const dim2 = shuffle(allQuestions.slice(25, 45)).slice(0, 3);
+            const dim3 = shuffle(allQuestions.slice(45, 65)).slice(0, 3);
+            const dim4 = shuffle(allQuestions.slice(65, 85)).slice(0, 3);
+            questions = shuffle([...dim1, ...dim2, ...dim3, ...dim4]);
+            currentQuestion = 0;
+            scores = { 宽容:0, 卡人:0, 计分:0, 故事:0, 嘴炮:0, 自闭:0, 好运:0, 运营:0 };
+
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('quizPage').style.display = 'flex';
+            document.getElementById('backHomeBtn').style.display = 'block';
+            showQuestion();
+        }
+
+        function startProTest() {
+            quizMode = 'pro';
+            questions = shuffle(proQuestions).slice(0, 10);
+            currentQuestion = 0;
+            proScore = 0;
+
+            // 清理线索卡片
+            const existingHint = document.getElementById('guessHintContainer');
+            if (existingHint) existingHint.remove();
+
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('quizPage').style.display = 'flex';
+            document.getElementById('backHomeBtn').style.display = 'block';
+            showQuestion();
+        }
+
+        function startGuessGame() {
+            quizMode = 'guess';
+            questions = shuffle(guessQuestions).slice(0, 10);
+            currentQuestion = 0;
+            guessScore = 0;
+            guessResults = [];
+
+            // 清理线索卡片
+            const existingHint = document.getElementById('guessHintContainer');
+            if (existingHint) existingHint.remove();
+
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('quizPage').style.display = 'flex';
+            document.getElementById('backHomeBtn').style.display = 'block';
+            showQuestion();
+        }
+
+        function goHome() {
+            // 清理所有状态
+            const existingHint = document.getElementById('guessHintContainer');
+            if (existingHint) existingHint.remove();
+
+            document.getElementById('quizPage').style.display = 'none';
+            document.getElementById('resultPage').style.display = 'none';
+            document.getElementById('welcomePage').style.display = 'flex';
+            document.getElementById('backHomeBtn').style.display = 'none';
+        }
+
+        // 显示题目
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionNum').textContent = `第 ${currentQuestion + 1}/12 题`;
+
+            const optionsContainer = document.querySelector('.options');
+            optionsContainer.innerHTML = '';
+
+            if (quizMode === 'mbti') {
+                document.getElementById('questionText').textContent = q.text;
+                document.getElementById('questionText').style.display = 'block';
+
+                const btnA = document.createElement('button');
+                btnA.className = 'option-btn';
+                btnA.textContent = 'A. ' + q.A.text;
+                btnA.onclick = () => selectOption('A');
+                optionsContainer.appendChild(btnA);
+
+                const btnB = document.createElement('button');
+                btnB.className = 'option-btn';
+                btnB.textContent = 'B. ' + q.B.text;
+                btnB.onclick = () => selectOption('B');
+                optionsContainer.appendChild(btnB);
+            } else if (quizMode === 'pro') {
+                document.getElementById('questionText').textContent = q.text;
+                document.getElementById('questionText').style.display = 'block';
+
+                q.options.forEach((opt, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = ['A', 'B', 'C', 'D'][index] + '. ' + opt.text;
+                    btn.onclick = () => selectProOption(index);
+                    optionsContainer.appendChild(btn);
+                });
+            } else {
+                // 表情包猜桌游模式
+                document.getElementById('questionText').style.display = 'none';
+
+                // 创建表情包卡片
+                const m = q.meme;
+                let hintHTML = '<div class="guess-meme-card">';
+                hintHTML += '<div class="meme-top">' + m.top + '</div>';
+                hintHTML += '<div class="meme-emoji">' + m.emoji + '</div>';
+                hintHTML += '<div class="meme-divider"></div>';
+                hintHTML += '<div class="meme-bottom">' + m.bottom + '</div>';
+                hintHTML += '<div class="meme-bottom-emoji">' + m.bottomEmoji + '</div>';
+                hintHTML += '<div class="guess-meme-label">🎲 猜这是哪款桌游？</div>';
+                hintHTML += '</div>';
+
+                // 在选项容器前插入表情包卡片
+                const quizPage = document.getElementById('quizPage');
+                const existingHint = document.getElementById('guessHintContainer');
+                if (existingHint) existingHint.remove();
+
+                const hintContainer = document.createElement('div');
+                hintContainer.id = 'guessHintContainer';
+                hintContainer.innerHTML = hintHTML;
+                quizPage.insertBefore(hintContainer, document.querySelector('.question-card'));
+
+                // 4个选项
+                q.options.forEach((opt, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = ['A', 'B', 'C', 'D'][index] + '. ' + opt;
+                    btn.onclick = () => selectGuessOption(index);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // 重新触发动画
+            const card = document.getElementById('questionCard');
+            card.style.animation = 'none';
+            setTimeout(() => card.style.animation = 'slideUp 0.4s ease', 10);
+        }
+
+        function selectOption(choice) {
+            const q = questions[currentQuestion];
+            const selected = choice === 'A' ? q.A : q.B;
+
+            for (let key in selected.scores) {
+                scores[key] += selected.scores[key];
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function selectProOption(index) {
+            const q = questions[currentQuestion];
+            if (q.options[index].correct) {
+                proScore += 1;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function selectGuessOption(index) {
+            const q = questions[currentQuestion];
+            const selected = q.options[index];
+            const correct = selected === q.answer;
+
+            if (correct) guessScore += 1;
+
+            // 记录答题情况
+            guessResults.push({
+                question: currentQuestion + 1,
+                answer: q.answer,
+                yours: selected,
+                correct: correct
+            });
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            if (quizMode === 'mbti') {
+                showMBTIResult();
+            } else if (quizMode === 'pro') {
+                showProResult();
+            } else {
+                showGuessResult();
+            }
+        }
+
+        // 看图猜桌游结果
+        function showGuessResult() {
+            // 隐藏MBTI和Pro特有元素
+            document.getElementById('rankBadge').style.display = 'none';
+            document.getElementById('classicQuote').style.display = 'none';
+            document.getElementById('personalityDesc').style.display = 'none';
+            document.getElementById('bestPartner').style.display = 'none';
+            document.getElementById('radarSection').style.display = 'none';
+            document.getElementById('proSection').style.display = 'none';
+            document.querySelector('.recommend-section').style.display = 'none';
+
+            // 隐藏所有小人配件
+            document.getElementById('devilHorns').style.display = 'none';
+            document.getElementById('angelWings').style.display = 'none';
+            document.getElementById('bigMouth').style.display = 'none';
+            document.getElementById('hoodie').style.display = 'none';
+            document.getElementById('luckyStars').style.display = 'none';
+            document.getElementById('tools').style.display = 'none';
+            document.getElementById('gems').style.display = 'none';
+            document.getElementById('storyBook').style.display = 'none';
+            document.getElementById('eyesDefault').style.display = 'block';
+            document.getElementById('eyesEvil').style.display = 'none';
+            document.getElementById('eyesShy').style.display = 'none';
+            document.getElementById('eyesStar').style.display = 'none';
+            document.getElementById('mouthDefault').style.display = 'block';
+
+            const mbtiType = document.getElementById('mbtiType');
+            const personalityTitle = document.getElementById('personalityTitle');
+            const catchphrase = document.getElementById('catchphrase');
+
+            // 根据答对题数给出评价
+            let rank, color, desc;
+            if (guessScore >= 9) {
+                rank = '🏆 猜题大师';
+                color = '#ffd700';
+                desc = '桌游图鉴级别！这些封面你肯定都背熟了。';
+            } else if (guessScore >= 7) {
+                rank = '🥇 桌游达人';
+                color = '#d4a017';
+                desc = '对桌游封面很熟悉，偶尔也有猜错的时候。';
+            } else if (guessScore >= 5) {
+                rank = '🥈 桌游爱好者';
+                color = '#9e9e9e';
+                desc = '认识不少桌游，但有些冷门还是猜不出。';
+            } else if (guessScore >= 3) {
+                rank = '🥉 桌游新手';
+                color = '#cd7f32';
+                desc = '认识几款经典桌游，还需要多来店里玩！';
+            } else {
+                rank = '🌱 桌游小白';
+                color = '#81c784';
+                desc = '这些桌游你还没接触过，来酸黄瓜探索新世界吧！';
+            }
+
+            mbtiType.textContent = rank;
+            mbtiType.className = 'mbti-type';
+            mbtiType.style.background = 'none';
+            mbtiType.style.webkitTextFillColor = color;
+            mbtiType.style.textShadow = '0 0 10px ' + color + '40';
+
+            personalityTitle.textContent = '猜对 ' + guessScore + ' / 10 题';
+            personalityTitle.style.color = color;
+            personalityTitle.style.textShadow = 'none';
+
+            catchphrase.textContent = desc;
+            catchphrase.style.color = color;
+            catchphrase.style.fontStyle = 'normal';
+            catchphrase.style.fontWeight = 'bold';
+
+            // 设置小人颜色
+            const avatarBody = document.getElementById('avatarBody');
+            const avatarHead = document.getElementById('avatarHead');
+            if (avatarBody) avatarBody.setAttribute('fill', color);
+            if (avatarHead) avatarHead.setAttribute('fill', color + 'aa');
+
+            // 显示每道题的答题情况
+            let answerHTML = '<div class="guess-answers">';
+            guessResults.forEach((result, index) => {
+                const icon = result.correct ? '✅' : '❌';
+                const correctClass = result.correct ? 'correct' : 'wrong';
+                answerHTML += '<div class="guess-answer-item ' + correctClass + '">';
+                answerHTML += '<span class="answer-q">' + icon + ' 第' + (index + 1) + '题</span>';
+                answerHTML += '<span class="answer-a">正确答案：' + result.answer + '</span>';
+                if (!result.correct) {
+                    answerHTML += '<span class="answer-yours">你的答案：' + result.yours + '</span>';
+                }
+                answerHTML += '</div>';
+            });
+            answerHTML += '</div>';
+
+            // 在推荐桌游区域显示答题详情
+            const recommendSection = document.querySelector('.recommend-section');
+            recommendSection.style.display = 'block';
+            recommendSection.innerHTML = '<h3>📋 答题详情</h3>' + answerHTML;
+
+            // 高段位庆祝彩带
+            if (guessScore >= 7) {
+                createConfetti(color);
+            }
+
+            document.getElementById('quizPage').style.display = 'none';
+            document.getElementById('resultPage').style.display = 'flex';
+        }
+
+        function showMBTIResult() {
+            // 计算四维人格
+            const style = scores['宽容'] >= scores['卡人'] ? '宽容' : '卡人';
+            const goal = scores['计分'] >= scores['故事'] ? '计分' : '故事';
+            const social = scores['嘴炮'] >= scores['自闭'] ? '嘴炮' : '自闭';
+            const ability = scores['好运'] >= scores['运营'] ? '好运' : '运营';
+            const personalityKey = style + '-' + goal + '-' + social + '-' + ability;
+            currentPersonalityKey = personalityKey;
+
+            const p = personalityData[personalityKey];
+            const rankInfo = getRank(personalityKey);
+
+            // 随机语录
+            const quotes = classicQuotes[personalityKey];
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+            // 设置段位
+            const rankBadge = document.getElementById('rankBadge');
+            rankBadge.className = 'rank-badge ' + rankInfo.class;
+            document.getElementById('rankText').textContent = rankInfo.icon + ' ' + rankInfo.rank;
+
+            // 设置经典语录
+            document.getElementById('classicQuote').textContent = randomQuote;
+
+            // 设置小人颜色和配件
+            const meepleColor = meepleColors[personalityKey];
+            const avatarBody = document.getElementById('avatarBody');
+            const avatarHead = document.getElementById('avatarHead');
+            if (avatarBody) avatarBody.setAttribute('fill', meepleColor.body);
+            if (avatarHead) avatarHead.setAttribute('fill', meepleColor.body);
+
+            // 根据人格特征切换外观
+            const parts = personalityKey.split('-');
+            const isKuanRong = parts[0] === '宽容';
+            const isStory = parts[1] === '故事';
+            const isZuiPao = parts[2] === '嘴炮';
+            const isHaoYun = parts[3] === '好运';
+
+            // 隐藏所有配件
+            document.getElementById('devilHorns').style.display = 'none';
+            document.getElementById('angelWings').style.display = 'none';
+            document.getElementById('bigMouth').style.display = 'none';
+            document.getElementById('hoodie').style.display = 'none';
+            document.getElementById('luckyStars').style.display = 'none';
+            document.getElementById('tools').style.display = 'none';
+            document.getElementById('gems').style.display = 'none';
+            document.getElementById('storyBook').style.display = 'none';
+            document.getElementById('eyesDefault').style.display = 'block';
+            document.getElementById('eyesEvil').style.display = 'none';
+            document.getElementById('eyesShy').style.display = 'none';
+            document.getElementById('eyesStar').style.display = 'none';
+            document.getElementById('mouthDefault').style.display = 'block';
+
+            // 宽容/卡人
+            if (!isKuanRong) {
+                document.getElementById('devilHorns').style.display = 'block';
+            } else {
+                document.getElementById('angelWings').style.display = 'block';
+            }
+
+            // 嘴炮/自闭
+            if (isZuiPao) {
+                document.getElementById('bigMouth').style.display = 'block';
+                document.getElementById('mouthDefault').style.display = 'none';
+                document.getElementById('eyesStar').style.display = 'block';
+                document.getElementById('eyesDefault').style.display = 'none';
+            } else {
+                document.getElementById('hoodie').style.display = 'block';
+                document.getElementById('eyesShy').style.display = 'block';
+                document.getElementById('eyesDefault').style.display = 'none';
+            }
+
+            // 好运/运营
+            if (isHaoYun) {
+                document.getElementById('luckyStars').style.display = 'block';
+            } else {
+                document.getElementById('tools').style.display = 'block';
+            }
+
+            // 计分/故事
+            if (!isStory) {
+                document.getElementById('gems').style.display = 'block';
+            } else {
+                document.getElementById('storyBook').style.display = 'block';
+            }
+
+            // 卡人且嘴炮时用冷笑表情
+            if (!isKuanRong && isZuiPao) {
+                document.getElementById('eyesEvil').style.display = 'block';
+                document.getElementById('eyesStar').style.display = 'none';
+                document.getElementById('eyesDefault').style.display = 'none';
+            }
+
+            // 设置MBTI类型（人格名）
+            document.getElementById('mbtiType').textContent = p.name;
+            document.getElementById('personalityTitle').textContent = p.tag;
+            document.getElementById('catchphrase').textContent = randomQuote;
+            document.getElementById('personalityDesc').textContent = p.desc;
+            document.getElementById('bestPartner').textContent = '最佳搭档：' + p.partner;
+
+            // 设置段位徽章颜色
+            rankBadge.style.background = 'linear-gradient(135deg, ' + p.color + ', ' + p.color + '88)';
+            rankBadge.style.color = '#fff';
+
+            // 绘制雷达图
+            drawRadarChart(personalityKey);
+
+            // 推荐桌游
+            const gameTags = document.getElementById('gameTags');
+            gameTags.innerHTML = '';
+            const recommended = pickRecommendedGames(personalityKey);
+            recommended.forEach(game => {
+                const tag = document.createElement('span');
+                tag.className = 'game-tag';
+                tag.textContent = game;
+                tag.style.background = 'linear-gradient(135deg, ' + p.color + '88, ' + p.color + '44)';
+                tag.style.color = p.color;
+                gameTags.appendChild(tag);
+            });
+
+            // 显示MBTI特有元素
+            document.getElementById('rankBadge').style.display = 'flex';
+            document.getElementById('classicQuote').style.display = 'block';
+            document.getElementById('personalityDesc').style.display = 'block';
+            document.getElementById('bestPartner').style.display = 'block';
+            document.getElementById('radarSection').style.display = 'block';
+            document.querySelector('.recommend-section').style.display = 'block';
+            // 隐藏段位模式元素
+            document.getElementById('proSection').style.display = 'none';
+
+            document.getElementById('quizPage').style.display = 'none';
+            document.getElementById('resultPage').style.display = 'flex';
+        }
+
+        // 根据人格推荐桌游
+        function pickRecommendedGames(personalityKey) {
+            const parts = personalityKey.split('-');
+            const isKuanRong = parts[0] === '宽容';
+            const isStory = parts[1] === '故事';
+            const isHaoYun = parts[3] === '好运';
+
+            // 根据人格特征推荐不同桌游
+            if (isKuanRong && !isStory && !isHaoYun) {
+                return pickRandomGames(['璀璨宝石', '七大奇迹：对决', '铁路环游']);
+            } else if (isKuanRong && !isStory && isHaoYun) {
+                return pickRandomGames(['哈铃果铃', '骆驼大赛', 'UNO']);
+            } else if (isKuanRong && isStory && !isHaoYun) {
+                return pickRandomGames(['诡镇奇谈：卡牌版', '忘海传记', '展翅翱翔']);
+            } else if (isKuanRong && isStory && isHaoYun) {
+                return pickRandomGames(['只言片语', '花见小路', '传情画意']);
+            } else if (!isKuanRong && !isStory && !isHaoYun) {
+                return pickRandomGames(['灵迹岛', '重塑火星', '历史巨轮']);
+            } else if (!isKuanRong && !isStory && isHaoYun) {
+                return pickRandomGames(['政变', '拉斯维加斯', '马尼拉']);
+            } else if (!isKuanRong && isStory && !isHaoYun) {
+                return pickRandomGames(['奥丁的盛宴', '伯明翰', '领国者']);
+            } else {
+                return pickRandomGames(['ROOT', '血色狂怒', '帝国曙光']);
+            }
+        }
+
+        function showProResult() {
+            // 按答对题数划分段位
+            let rank;
+            if (proScore <= 2) rank = '青铜';
+            else if (proScore === 3) rank = '白银';
+            else if (proScore <= 5) rank = '黄金';
+            else if (proScore <= 7) rank = '铂金';
+            else if (proScore <= 9) rank = '钻石';
+            else rank = '王者';
+
+            const result = proResults[rank];
+
+            // 隐藏MBTI特有元素
+            document.getElementById('rankBadge').style.display = 'none';
+            document.getElementById('classicQuote').style.display = 'none';
+            document.getElementById('personalityDesc').style.display = 'none';
+            document.getElementById('bestPartner').style.display = 'none';
+            document.getElementById('radarSection').style.display = 'none';
+            // 隐藏推荐桌游（段位模式不显示）
+            document.querySelector('.recommend-section').style.display = 'none';
+            // 隐藏所有小人配件
+            document.getElementById('devilHorns').style.display = 'none';
+            document.getElementById('angelWings').style.display = 'none';
+            document.getElementById('bigMouth').style.display = 'none';
+            document.getElementById('hoodie').style.display = 'none';
+            document.getElementById('luckyStars').style.display = 'none';
+            document.getElementById('tools').style.display = 'none';
+            document.getElementById('gems').style.display = 'none';
+            document.getElementById('storyBook').style.display = 'none';
+            document.getElementById('eyesDefault').style.display = 'block';
+            document.getElementById('eyesEvil').style.display = 'none';
+            document.getElementById('eyesShy').style.display = 'none';
+            document.getElementById('eyesStar').style.display = 'none';
+            document.getElementById('mouthDefault').style.display = 'block';
+
+            // 显示段位专属区域
+            document.getElementById('proSection').style.display = 'block';
+
+            // 设置段位样式
+            const mbtiType = document.getElementById('mbtiType');
+            const personalityTitle = document.getElementById('personalityTitle');
+            const catchphrase = document.getElementById('catchphrase');
+
+            mbtiType.textContent = rank;
+            mbtiType.className = 'mbti-type rank-' + result.class;
+            // 覆盖MBTI模式的渐变文字，显示段位颜色
+            mbtiType.style.background = 'none';
+            mbtiType.style.webkitBackgroundClip = 'initial';
+            mbtiType.style.webkitTextFillColor = result.color;
+
+            personalityTitle.textContent = result.title;
+            personalityTitle.style.color = result.color;
+            personalityTitle.style.textShadow = '0 0 10px ' + result.color + '40';
+
+            catchphrase.textContent = result.desc;
+            catchphrase.style.color = result.color;
+            catchphrase.style.fontStyle = 'normal';
+            catchphrase.style.fontWeight = 'bold';
+
+            // 设置小人颜色
+            const avatarBody = document.getElementById('avatarBody');
+            const avatarHead = document.getElementById('avatarHead');
+            if (avatarBody) avatarBody.setAttribute('fill', result.color);
+            if (avatarHead) avatarHead.setAttribute('fill', result.color + 'aa');
+
+            // 段位徽章
+            document.getElementById('proEmoji').textContent = result.emoji;
+            document.getElementById('proPower').textContent = result.power;
+            document.getElementById('proPower').style.color = result.color;
+
+            // 得分进度条
+            document.getElementById('proProgressText').textContent = proScore + ' / 10 题';
+            const progressFill = document.getElementById('proProgressFill');
+            progressFill.style.width = '0%';
+            progressFill.style.background = 'linear-gradient(90deg, ' + result.color + ', ' + result.color + 'cc)';
+            setTimeout(() => {
+                progressFill.style.width = (proScore * 10) + '%';
+            }, 300);
+
+            // 段位故事
+            const proStory = document.getElementById('proStory');
+            proStory.textContent = result.detail;
+            proStory.style.borderLeftColor = result.color;
+
+            // 段位特权
+            const proPrivilege = document.getElementById('proPrivilege');
+            proPrivilege.textContent = result.privilege;
+            proPrivilege.style.background = result.color + '18';
+            proPrivilege.style.borderLeftColor = result.color;
+            proPrivilege.style.color = result.color;
+
+            // 进阶提示
+            const proNext = document.getElementById('proNext');
+            if (result.nextGap > 0) {
+                proNext.textContent = '还差 ' + result.nextGap + ' 题即可晋升【' + result.nextRank + '】段位，再来一局试试！';
+                proNext.style.background = '#fff3e0';
+                proNext.style.color = '#666';
+                proNext.style.borderLeftColor = '#ff9800';
+            } else {
+                proNext.textContent = '你已到达巅峰！来店里坐坐，酸黄瓜老板想认识你。';
+                proNext.style.background = '#e8f5e9';
+                proNext.style.color = '#2e7d32';
+                proNext.style.borderLeftColor = '#66bb6a';
+            }
+
+            // 高段位庆祝彩带
+            if (proScore >= 5) {
+                createConfetti(result.color);
+            }
+
+            document.getElementById('quizPage').style.display = 'none';
+            document.getElementById('resultPage').style.display = 'flex';
+        }
+
+        // 庆祝彩带
+        function createConfetti(color) {
+            // 清除旧彩带
+            const old = document.querySelector('.confetti-container');
+            if (old) old.remove();
+
+            const container = document.createElement('div');
+            container.className = 'confetti-container';
+            document.body.appendChild(container);
+
+            const colors = [color, '#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff85a1', '#a66cff'];
+            const shapes = ['●', '■', '▲', '★', '◆'];
+
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.fontSize = (Math.random() * 12 + 8) + 'px';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confetti.style.animationDelay = Math.random() * 1.5 + 's';
+                container.appendChild(confetti);
+            }
+
+            // 5秒后清除
+            setTimeout(() => {
+                if (container.parentNode) container.remove();
+            }, 5000);
+        }
+
+        function shareResult() {
+            let text;
+            if (quizMode === 'mbti') {
+                const pKey = currentPersonalityKey;
+                const p = personalityData[pKey];
+                text = `我的桌游隐藏人格是【${p.name}】！\n"${p.tag}"\n\n来测测你的→`;
+            } else if (quizMode === 'pro') {
+                const rank = document.getElementById('mbtiType').textContent;
+                const title = document.getElementById('personalityTitle').textContent;
+                text = `我的桌游段位是【${rank}·${title}】！\n来测测你的→`;
+            } else {
+                const rank = document.getElementById('mbtiType').textContent;
+                const score = document.getElementById('personalityTitle').textContent;
+                text = `我在酸黄瓜桌游猜题挑战中${rank}，${score}！\n来测测你的→`;
+            }
+
+            if (navigator.share) {
+                navigator.share({
+                    title: '解锁你的桌游隐藏人格',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                showToast('请截图分享朋友圈');
+                setTimeout(() => {
+                    document.getElementById('resultCard').style.border = '3px dashed #81c784';
+                }, 100);
+                setTimeout(() => {
+                    document.getElementById('resultCard').style.border = 'none';
+                }, 3000);
+            }
+        }
+
+        function copyText() {
+            let text;
+            if (quizMode === 'mbti') {
+                const pKey = currentPersonalityKey;
+                const p = personalityData[pKey];
+                text = `我的桌游隐藏人格是【${p.name}】！\n"${p.tag}"\n\n📍酸黄瓜桌游俱乐部\n杭州·开了6年的桌游店\n\n#桌游隐藏人格 #酸黄瓜桌游俱乐部`;
+            } else if (quizMode === 'pro') {
+                const rank = document.getElementById('mbtiType').textContent;
+                const title = document.getElementById('personalityTitle').textContent;
+                text = `我的桌游段位是【${rank}·${title}】！\n\n📍酸黄瓜桌游俱乐部\n杭州·开了6年的桌游店\n\n#桌游段位 #酸黄瓜桌游俱乐部`;
+            } else {
+                const rank = document.getElementById('mbtiType').textContent;
+                const score = document.getElementById('personalityTitle').textContent;
+                text = `我在酸黄瓜桌游猜题挑战中${rank}，${score}！\n\n📍酸黄瓜桌游俱乐部\n杭州·开了6年的桌游店\n\n#看图猜桌游 #酸黄瓜桌游俱乐部`;
+            }
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('文案已复制，快去发朋友圈！');
+                });
+            } else {
+                showToast('请长按截图保存');
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2000);
+        }
+    </script>
+</body>
+</html>
